@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { Briefcase } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
-// ── Effect Styles ──────────────────────────────────────────────────────────
 const EFFECT_STYLES = `
   @keyframes ripple-burst {
     0%   { transform: scale(0); opacity: 0.6; }
@@ -85,7 +84,7 @@ const EFFECT_STYLES = `
   .child-link.is-active-link::after { width: 100%; }
 `;
 
-// ── Ripple spawner ─────────────────────────────────────────────────────────
+
 function spawnRipple(e, ref) {
   const el = ref.current;
   if (!el) return;
@@ -98,7 +97,7 @@ function spawnRipple(e, ref) {
   setTimeout(() => dot.remove(), 600);
 }
 
-// ── Menu Data (exactly as original) ───────────────────────────────────────
+
 const menuItems = [
   {
     title: "Financials",
@@ -138,11 +137,11 @@ const menuItems = [
   { title: "Inventory" },
   { title: "Production" },
   { title: "Resources" },
+   {title: "HR payroll"},
   { title: "Banking " },
   { title: "Production" },
 ];
 
-// ── SidebarItem ────────────────────────────────────────────────────────────
 const SidebarItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location    = useLocation();
@@ -179,7 +178,6 @@ const SidebarItem = ({ item }) => {
         </div>
       </button>
 
-      {/* Nested children */}
       <div className={cn(
         "overflow-hidden transition-all duration-300 ease-in-out pl-12",
         isOpen ? "max-h-[600px] opacity-100 mt-1" : "max-h-0 opacity-0"
@@ -206,14 +204,12 @@ const SidebarItem = ({ item }) => {
   );
 };
 
-// ── Sidebar ────────────────────────────────────────────────────────────────
 export default function Sidebar() {
   return (
     <>
       <style>{EFFECT_STYLES}</style>
       <aside className="w-72 h-screen bg-white border-r border-slate-100 flex flex-col p-4 fixed left-0 top-0 z-50">
 
-        {/* Logo — unchanged */}
         <div className="flex items-center gap-3 px-4 py-6 mb-4">
           <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
             <Briefcase className="text-white" size={22} />
@@ -223,7 +219,6 @@ export default function Sidebar() {
           </span>
         </div>
 
-        {/* Nav — unchanged structure */}
         <nav className="flex-1 space-y-2 px-2 overflow-y-auto custom-scrollbar">
           {menuItems.map((item, idx) => (
             <SidebarItem key={idx} item={item} />
