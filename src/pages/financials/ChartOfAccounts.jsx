@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-    BarChart3,
     ChevronRight,
     Save,
-    Plus,
-    Search,
     ListTree
 } from 'lucide-react';
-import { cn } from "@/lib/utils";
 
-const InputField = ({ label, placeholder, type = "text" }) => (
+const InputField = ({ label, placeholder, type = "text", name, value, onChange }) => (
     <div className="space-y-1.5 flex-1 min-w-[240px]">
         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">{label}</label>
         <input
             type={type}
+            name={name}
+            value={value}
+            onChange={onChange}
             placeholder={placeholder}
             className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all"
         />
     </div>
 );
 
-const SelectField = ({ label, options }) => (
+const SelectField = ({ label, options, name, value, onChange }) => (
     <div className="space-y-1.5 flex-1 min-w-[240px]">
         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">{label}</label>
-        <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all appearance-none cursor-pointer">
+        <select
+            name={name}
+            value={value}
+            onChange={onChange}
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all appearance-none cursor-pointer">
+            <option value="" disabled>Select {label}</option>
             {options.map((opt, i) => (
                 <option key={i} value={opt}>{opt}</option>
             ))}
@@ -32,6 +36,65 @@ const SelectField = ({ label, options }) => (
 );
 
 export default function ChartOfAccounts() {
+    const [formData, setFormData] = useState({
+        accountCode: '',
+        accountName: '',
+        accountType: '',
+        category: '',
+        subCategory: '',
+        currency: '',
+        openingBalance: '',
+        targetBalance: '',
+        taxGroup: '',
+        referenceNo: '',
+        integrationKey: '',
+        reportingGroup: '',
+        description: ''
+    });
+    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSave = async () => {
+        try {
+            setLoading(true);
+            const payload = {
+                ...formData,
+                openingBalance: parseFloat(formData.openingBalance) || 0,
+                targetBalance: parseFloat(formData.targetBalance) || 0,
+            };
+
+            const response = await fetch('http://localhost:3000/chart-of-accounts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to save account');
+            }
+
+            // alert('Chart of Account saved successfully!');
+            // Reset form
+            setFormData({
+                accountCode: '', accountName: '', accountType: '', category: '',
+                subCategory: '', currency: '', openingBalance: '', targetBalance: '',
+                taxGroup: '', referenceNo: '', integrationKey: '', reportingGroup: '', description: ''
+            });
+
+        } catch (error) {
+            console.error('Error saving:', error);
+            alert('Error saving Chart of Account.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -58,18 +121,18 @@ export default function ChartOfAccounts() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <InputField label="Account Code" placeholder="e.g. 101001" />
-                        <InputField label="Account Name" placeholder="e.g. Cash at Bank" />
-                        <SelectField label="Account Type" options={['Assets', 'Liabilities', 'Equity', 'Revenue', 'Expenses']} />
-                        <SelectField label="Category" options={['Current Assets', 'Fixed Assets', 'Operating Expenses', 'Direct Revenue']} />
-                        <SelectField label="Sub-Category" options={['Bank Accounts', 'Cash Accounts', 'Inventory', 'Receivables']} />
-                        <SelectField label="Currency" options={['PKR', 'USD', 'AED', 'SAR']} />
-                        <InputField label="Opening Balance" placeholder="0.00" type="number" />
-                        <InputField label="Target Balance" placeholder="0.00" type="number" />
-                        <SelectField label="Tax Group" options={['Exempt', 'Standard 17%', 'Reduced 5%']} />
-                        <InputField label="Reference No." placeholder="..." />
-                        <InputField label="Integration Key" placeholder="ERP-ID-..." />
-                        <SelectField label="Reporting Group" options={['Head Office', 'Retail', 'Online']} />
+                        <InputField label="Account Code" name="accountCode" value={formData.accountCode} onChange={handleChange} placeholder="e.g. 101001" />
+                        <InputField label="Account Name" name="accountName" value={formData.accountName} onChange={handleChange} placeholder="e.g. Cash at Bank" />
+                        <SelectField label="Account Type" name="accountType" value={formData.accountType} onChange={handleChange} options={['Assets', 'Liabilities', 'Equity', 'Revenue', 'Expenses']} />
+                        <SelectField label="Category" name="category" value={formData.category} onChange={handleChange} options={['Current Assets', 'Fixed Assets', 'Operating Expenses', 'Direct Revenue']} />
+                        <SelectField label="Sub-Category" name="subCategory" value={formData.subCategory} onChange={handleChange} options={['Bank Accounts', 'Cash Accounts', 'Inventory', 'Receivables']} />
+                        <SelectField label="Currency" name="currency" value={formData.currency} onChange={handleChange} options={['PKR', 'USD', 'AED', 'SAR']} />
+                        <InputField label="Opening Balance" name="openingBalance" value={formData.openingBalance} onChange={handleChange} placeholder="0.00" type="number" />
+                        <InputField label="Target Balance" name="targetBalance" value={formData.targetBalance} onChange={handleChange} placeholder="0.00" type="number" />
+                        <SelectField label="Tax Group" name="taxGroup" value={formData.taxGroup} onChange={handleChange} options={['Exempt', 'Standard 17%', 'Reduced 5%']} />
+                        <InputField label="Reference No." name="referenceNo" value={formData.referenceNo} onChange={handleChange} placeholder="..." />
+                        <InputField label="Integration Key" name="integrationKey" value={formData.integrationKey} onChange={handleChange} placeholder="ERP-ID-..." />
+                        <SelectField label="Reporting Group" name="reportingGroup" value={formData.reportingGroup} onChange={handleChange} options={['Head Office', 'Retail', 'Online']} />
                     </div>
                 </div>
 
@@ -80,30 +143,23 @@ export default function ChartOfAccounts() {
                             <div className="space-y-1.5 flex-1">
                                 <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Description</label>
                                 <textarea
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleChange}
                                     rows="3"
                                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all resize-none"
                                     placeholder="Enter account description..."
                                 />
                             </div>
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                    <input type="checkbox" className="w-4 h-4 rounded text-primary focus:ring-primary border-slate-300 pointer-events-auto cursor-pointer" />
-                                    <span className="text-sm font-bold text-slate-700">Account is Active</span>
-                                </div>
-                                <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                    <input type="checkbox" className="w-4 h-4 rounded text-primary focus:ring-primary border-slate-300 cursor-pointer" />
-                                    <span className="text-sm font-bold text-slate-700">Allow Manual Postings</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
                     <div className="pt-4 flex justify-end gap-3 border-t border-slate-100">
-                        <button className="px-8 py-3 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all font-bold">
-                            Discard
-                        </button>
-                        <button className="px-8 py-3 rounded-xl bg-primary text-white hover:opacity-90 transition-all font-bold shadow-lg shadow-primary/20 flex items-center gap-2">
-                            <Save size={18} /> Create Account
+                        <button
+                            onClick={handleSave}
+                            disabled={loading}
+                            className="px-8 py-3 rounded-xl bg-primary text-white hover:opacity-90 transition-all font-bold shadow-lg shadow-primary/20 flex items-center gap-2 disabled:opacity-50">
+                            <Save size={18} /> {loading ? 'Saving...' : 'save files'}
                         </button>
                     </div>
                 </div>
