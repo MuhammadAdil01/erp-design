@@ -194,7 +194,7 @@ export default function RecurringPostings() {
                         </div>
                         <div className="w-px h-10 bg-slate-200 mx-2"></div>
                         <CheckCircle2 size={32} className="text-primary" />
-                    </div>
+                    </div>  
                 </div>
             </div>
         </div>

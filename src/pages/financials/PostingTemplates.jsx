@@ -152,53 +152,11 @@ export default function PostingTemplates() {
                             </p>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            {/* Advanced Settings Bottom Bar */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="glass-card p-8 rounded-[2.5rem] bg-slate-900 text-white relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-transparent"></div>
-                    <div className="flex items-center gap-4 mb-6 relative z-10">
-                        <Settings2 size={24} className="text-primary" />
-                        <h3 className="font-bold">Posting Frequency Settings</h3>
-                    </div>
-                    <div className="grid grid-cols-2 gap-6 relative z-10">
-                        <div className="space-y-4">
-                            <label className="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" className="w-5 h-5 rounded-lg border-white/20 bg-white/5 text-primary focus:ring-primary" />
-                                <span className="text-sm font-semibold text-slate-300 group-hover:text-white transition-colors">Enable Auto-Generation</span>
-                            </label>
-                            <label className="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" className="w-5 h-5 rounded-lg border-white/20 bg-white/5 text-primary focus:ring-primary" />
-                                <span className="text-sm font-semibold text-slate-300 group-hover:text-white transition-colors">Requires Approval</span>
-                            </label>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="space-y-1.5">
-                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Execution Priority</label>
-                                <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm font-semibold outline-none focus:ring-1 focus:ring-primary/50">
-                                    <option>High</option>
-                                    <option>Normal</option>
-                                    <option>Low</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="glass-card p-8 rounded-[2.5rem] bg-white border border-slate-100 flex flex-col justify-center">
-                    <div className="flex items-center gap-4 mb-4 text-slate-400">
-                        <Type size={20} />
-                        <h3 className="text-xs font-bold uppercase tracking-widest">User Access & permissions</h3>
-                    </div>
-                    <p className="text-sm text-slate-500 font-medium leading-relaxed mb-6">
-                        Templates are global by default but can be restricted to specific departments or financial roles.
-                    </p>
-                    <div className="flex gap-2">
-                        <span className="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-bold text-slate-600 uppercase tracking-widest">Finance Admin</span>
-                        <span className="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-bold text-slate-600 uppercase tracking-widest">Audit Manager</span>
-                    </div>
+                      <button className="px-8 py-2.5 mt-10 rounded-xl text-white font-bold shadow-lg flex items-center gap-2 hover:opacity-90 disabled:opacity-50 transition-all"
+                            style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)' }}
+                        >
+                        save files
+                        </button>
                 </div>
             </div>
         </div>
