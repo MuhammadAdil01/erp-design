@@ -14,7 +14,7 @@ import {
 const cn = (...classes) => classes.filter(Boolean).join(' ');
 
 const InputField = ({ label, placeholder, type = "text", className = "", value, onChange, name }) => (
-    <div clasName={cn("space-y-1.5 flex-1 min-w-[240px]", className)}>
+    <div className={cn("space-y-1.5 flex-1 min-w-[240px]", className)}>
         <label className="text-[10px] font-bold text-yellow-700 uppercase tracking-widest block">{label}</label>
         <input
             type={type}
@@ -101,7 +101,8 @@ export default function EditChartOfAccounts() {
                 throw new Error("Account Code and Name are required.");
             }
 
-            const response = await fetch('http://localhost:3000/chart-of-accounts', {
+            // const response = await fetch('http://localhost:3000/chart-of-accounts', {
+            const response = await fetch('https://calm-dream-production-673c.up.railway.app/chart-of-accounts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

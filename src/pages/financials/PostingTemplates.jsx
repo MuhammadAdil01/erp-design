@@ -69,14 +69,6 @@ export default function PostingTemplates() {
                     </div>
                     <h1 className="text-2xl font-bold text-primary tracking-tight">Voucher & Posting Templates</h1>
                 </div>
-                <div className="flex gap-3">
-                    <button className="px-6 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-white transition-all font-bold shadow-sm flex items-center gap-2">
-                        <Copy size={18} /> Duplicate
-                    </button>
-                    <button className="px-8 py-2.5 rounded-xl bg-primary text-white hover:opacity-90 transition-all font-bold shadow-lg shadow-primary/20 flex items-center gap-2">
-                        <Save size={18} /> Save Template
-                    </button>
-                </div>
             </div>
 
             {/* Template Identification Card */}
@@ -119,9 +111,6 @@ export default function PostingTemplates() {
                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Define debit/credit rules for this template</p>
                         </div>
                     </div>
-                    <button className="px-5 py-2 rounded-xl bg-primary text-white hover:opacity-90 transition-all font-bold shadow-lg shadow-primary/20 flex items-center gap-2 text-xs">
-                        <Plus size={16} /> Add Position
-                    </button>
                 </div>
                 <div className="p-0 overflow-x-auto">
                     <table className="w-full text-left border-collapse">
