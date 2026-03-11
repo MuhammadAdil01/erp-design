@@ -128,7 +128,7 @@ export default function EditChartOfAccounts() {
     };
 
     return (
-        <div className="min-h-screen pb-12 p-6" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #fffbeb 40%, #fef9c3 70%, #fef08a 100%)' }}>
+        <div className="min-h-screen pb-12 p-6">
             <div className="max-w-7xl mx-auto space-y-6">
 
                 {/* Header */}
@@ -142,27 +142,6 @@ export default function EditChartOfAccounts() {
                         <h1 className="text-2xl font-bold tracking-tight" style={{ color: '#92400e' }}>
                             Modify Financial Structure
                         </h1>
-                    </div>
-                    <div className="flex gap-3">
-                        <button
-                            onClick={() => setFormData({
-                                accountCode: '', accountName: '', accountType: '', category: '',
-                                subCategory: '', currency: 'PKR', openingBalance: '', currentBalance: '',
-                                taxGroup: '', integrationKey: '', reportingGroup: '', externalReference: ''
-                            })}
-                            className="px-6 py-2.5 rounded-xl border border-yellow-200 text-yellow-700 hover:bg-yellow-50 transition-all font-bold shadow-sm bg-white"
-                        >
-                            Cancel Changes
-                        </button>
-                        <button
-                            onClick={handleSave}
-                            disabled={isLoading}
-                            className="px-8 py-2.5 rounded-xl text-white hover:opacity-90 disabled:opacity-50 transition-all font-bold shadow-lg flex items-center gap-2"
-                            style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)' }}
-                        >
-                            {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-                            {isLoading ? 'Updating...' : 'Update Account'}
-                        </button>
                     </div>
                 </div>
 
