@@ -121,7 +121,7 @@ export default function NextOfKin() {
                     JD
                 </div>
                 <div className="flex-1 min-w-[200px]">
-                    <h2 className="text-lg font-bold text-slate-800">John Doe</h2>
+                    <h2 className="text-lg font-bold text-slate-800">sara ali</h2>
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Senior Software Engineer • ID: EMP-2023-001</p>
                 </div>
                 <div className="flex flex-wrap gap-6 border-l border-slate-100 pl-8">

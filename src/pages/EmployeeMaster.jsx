@@ -98,8 +98,15 @@ export default function EmployeeMaster() {
                         <InputField label="Department" placeholder="Operations / IT" />
                         <InputField label="Employee Type" placeholder="Permanent / Contract" />
                         <InputField label="Shift" placeholder="Day / Night" />
+                        <div className='m-auto w-[100%] '>
+                             <button
+                                    className="px-3 py-3 rounded-xl bg-primary text-white hover:opacity-90 transition-all font-bold shadow-lg shadow-primary/20 flex items-center gap-2 disabled:opacity-50">
+                                    save files
+                                </button>
+                        </div>
                     </div>
                 </div>
+                 
 
                 {/* Dynamic Content Area */}
                 <div className="flex flex-col">
@@ -208,6 +215,7 @@ export default function EmployeeMaster() {
                             </div>
                         )}
                     </div>
+                    
                 </div>
             </div>
         </div>
