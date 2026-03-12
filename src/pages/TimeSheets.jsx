@@ -1,176 +1,173 @@
 import React, { useState } from 'react';
-import {
-    Clock,
-    Calendar,
-    ChevronRight,
-    Save,
-    X,
-    Plus,
-    Filter,
-    Download,
-    AlertCircle
-} from 'lucide-react';
 import { cn } from "@/lib/utils";
+import { Search } from 'lucide-react';
+
+const ClassicInput = ({ label, value, type = "text", className, isSelect = false, options = [], disabled = false, isSearch = false }) => (
+    <div className={cn("flex items-center border-[0.5px] border-slate-400 bg-[#f0f0f0]", className)}>
+        <label className="w-24 px-2 py-0.5 text-[11px] font-semibold text-slate-700 border-r-[0.5px] border-slate-400 h-full flex items-center">
+            {label}
+        </label>
+        <div className="flex-1 flex items-center bg-[#fff9c4] relative">
+            {isSelect ? (
+                <select className="flex-1 bg-transparent px-1 py-0.5 text-[11px] outline-none h-full cursor-pointer focus:bg-white transition-colors appearance-none">
+                    {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
+                </select>
+            ) : (
+                <input
+                    type={type}
+                    disabled={disabled}
+                    className={cn(
+                        "flex-1 px-1 py-0.5 text-[11px] outline-none h-full transition-colors",
+                        disabled ? "bg-[#e0e0e0] cursor-not-allowed" : "bg-transparent focus:bg-white"
+                    )}
+                    defaultValue={value}
+                />
+            )}
+            {isSearch && (
+                <div className="absolute right-0.5 top-0.5 bottom-0.5 w-4 flex items-center justify-center bg-slate-200 border border-slate-400 rounded-sm cursor-pointer hover:bg-slate-300">
+                    <div className="w-3 h-3 rounded-full border border-slate-600 bg-white flex items-center justify-center">
+                        <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+                    </div>
+                </div>
+            )}
+        </div>
+    </div>
+);
+
+const ClassicTab = ({ label, active, onClick }) => (
+    <button
+        onClick={onClick}
+        className={cn(
+            "px-6 py-1 text-[11px] font-semibold border-t border-x border-slate-400 rounded-t-sm transition-colors",
+            active ? "bg-white -mb-[1px] z-10" : "bg-[#e0e0e0] hover:bg-[#d8d8d8]"
+        )}
+    >
+        {label}
+    </button>
+);
 
 export default function TimeSheets() {
-    const [activeType, setActiveType] = useState('Daily');
+    const [activeTab, setActiveTab] = useState('Contents');
+    const tabs = ['Contents', 'Attachments'];
 
     return (
-        <div className="space-y-6">
-            {/* Page Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <div className="flex items-center gap-2 text-sm text-slate-500 mb-1">
-                        <span>Human Resources</span>
-                        <ChevronRight size={14} />
-                        <span className="text-primary font-medium">Time Sheets</span>
-                    </div>
-                    <h1 className="text-2xl font-bold text-primary">Time Sheets Management</h1>
-                </div>
+        <div className="flex flex-col bg-[#f0f0f0] min-h-full font-sans select-none">
+            {/* Row 1: Header */}
+            <div className="h-[25px] flex items-center px-4 bg-gradient-to-b from-[#e6e6e6] to-[#cccccc] border-b border-slate-400 shadow-sm">
+                <span className="text-[12px] font-bold text-slate-800">Time Sheet</span>
             </div>
 
-            {/* Stats Strip */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[
-                    { label: 'Total Hours this Week', value: '1,240h', icon: Clock, color: 'primary' },
-                    { label: 'Overtime Hours', value: '42h', icon: Calendar, color: 'blue-500' },
-                    { label: 'Pending Approvals', value: '18', icon: AlertCircle, color: 'rose-500' },
-                ].map((stat, i) => (
-                    <div key={i} className="glass-card p-6 rounded-3xl">
-                        <div className="flex items-center gap-4">
-                            <div className={`p-3 rounded-2xl bg-${stat.color}/10 text-${stat.color}`}>
-                                <stat.icon size={22} />
-                            </div>
-                            <div>
-                                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{stat.label}</p>
-                                <p className="text-xl font-bold text-slate-800">{stat.value}</p>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {/* Filters Section */}
-            <div className="glass-card p-8 rounded-[2rem] bg-white">
-                <div className="flex items-center gap-3 mb-6">
-                    <Filter size={18} className="text-primary" />
-                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Filter Logs</h3>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="space-y-1.5 flex-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">From Date</label>
-                        <input type="date" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-semibold" />
-                    </div>
-                    <div className="space-y-1.5 flex-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">To Date</label>
-                        <input type="date" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-semibold" />
-                    </div>
-                    <div className="space-y-1.5 flex-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Department</label>
-                        <select className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-semibold cursor-pointer appearance-none">
-                            <option>All Departments</option>
-                            <option>Engineering</option>
-                            <option>Marketing</option>
-                            <option>HR</option>
-                        </select>
-                    </div>
-                    <div className="space-y-1.5 flex-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Status</label>
-                        <select className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-semibold cursor-pointer appearance-none">
-                            <option>All Status</option>
-                            <option>Approved</option>
-                            <option>Pending</option>
-                            <option>Rejected</option>
-                        </select>
-                    </div>
-                    <div className="space-y-1.5 flex-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Employee Search</label>
-                        <input type="text" placeholder="Name or ID..." className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-semibold" />
-                    </div>
-                    <div className="space-y-1.5 flex-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Project</label>
-                        <input type="text" placeholder="Project name..." className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-semibold" />
-                    </div>
-                    <div className="space-y-1.5 flex-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Shift Type</label>
-                        <select className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-semibold cursor-pointer appearance-none">
-                            <option>Day</option>
-                            <option>Night</option>
-                            <option>Overtime</option>
-                        </select>
-                    </div>
-                    <div className="flex items-end">
-                        <button className="w-full py-2.5 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all text-xs uppercase tracking-widest">
-                            Apply Filters
-                        </button>
-                    </div>
-                </div>
-            </div>
+            {/* Row 2: Yellow Divider */}
+            <div className="h-[3px] w-full bg-[#f5a623]"></div>
 
             {/* Main Content */}
-            <div className="glass-card rounded-[2rem] overflow-hidden">
-                <div className="flex border-b border-slate-100 overflow-x-auto bg-primary/5">
-                    {['Daily', 'Weekly', 'Monthly'].map((type) => (
-                        <button
-                            key={type}
-                            onClick={() => setActiveType(type)}
-                            className={cn(
-                                "px-8 py-5 text-sm font-bold transition-all duration-200 border-b-2",
-                                activeType === type
-                                    ? "border-primary text-primary"
-                                    : "border-transparent text-slate-400 hover:text-slate-600"
-                            )}
-                        >
-                            {type} Logs
-                        </button>
-                    ))}
+            <div className="p-4 space-y-6">
+                {/* Top Section */}
+                <div className="grid grid-cols-2 gap-x-32 max-w-[1200px]">
+                    {/* Left Form */}
+                    <div className="space-y-[2px]">
+                        <ClassicInput label="Type" isSelect options={['Employee', 'User', 'Other']} />
+                        <ClassicInput label="Code" isSearch />
+                        <ClassicInput label="Name" disabled />
+                        <ClassicInput label="First Name" disabled />
+                        <ClassicInput label="Department" isSelect options={['', 'Engineering', 'Finance', 'HR']} />
+                    </div>
+
+                    {/* Right Form */}
+                    <div className="space-y-[2px] w-64 ml-auto">
+                        <ClassicInput label="No." value="50" disabled />
+                        <ClassicInput label="Date From" value="24.02.26" className="bg-white" />
+                        <ClassicInput label="Date To" className="bg-white" />
+                    </div>
                 </div>
 
-                <div className="p-8">
-                    <table className="w-full text-left">
-                        <thead>
-                            <tr className="text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
-                                <th className="pb-4 px-4 font-bold">Employee</th>
-                                <th className="pb-4 px-4 font-bold">Project</th>
-                                <th className="pb-4 px-4 font-bold">Date</th>
-                                <th className="pb-4 px-4 font-bold text-center">In</th>
-                                <th className="pb-4 px-4 text-center font-bold">Out</th>
-                                <th className="pb-4 px-4 text-center font-bold">Hours</th>
-                                <th className="pb-4 px-4 text-right font-bold">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[
-                                { name: 'John Doe', project: 'Internal Admin', date: 'Oct 24, 2023', in: '09:00 AM', out: '05:30 PM', hours: '8.5h', status: 'Approved' },
-                                { name: 'Alice Smith', project: 'Client Portal', date: 'Oct 24, 2023', in: '08:45 AM', out: '06:00 PM', hours: '9.25h', status: 'Pending' },
-                                { name: 'Robert Fox', project: 'HR System', date: 'Oct 23, 2023', in: '10:00 AM', out: '07:00 PM', hours: '9.0h', status: 'Approved' },
-                            ].map((row, i) => (
-                                <tr key={i} className="group hover:bg-slate-50 transition-all border-b border-slate-50 last:border-0">
-                                    <td className="py-5 px-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold">
-                                                {row.name.charAt(0)}
-                                            </div>
-                                            <span className="text-sm font-bold text-slate-800">{row.name}</span>
-                                        </div>
-                                    </td>
-                                    <td className="py-5 px-4 text-sm text-slate-600 font-medium">{row.project}</td>
-                                    <td className="py-5 px-4 text-sm text-slate-600 font-medium">{row.date}</td>
-                                    <td className="py-5 px-4 text-sm text-center text-slate-600 font-medium">{row.in}</td>
-                                    <td className="py-5 px-4 text-sm text-center text-slate-600 font-medium">{row.out}</td>
-                                    <td className="py-5 px-4 text-sm text-center font-bold text-slate-800">{row.hours}</td>
-                                    <td className="py-5 px-4 text-right">
-                                        <span className={cn(
-                                            "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
-                                            row.status === 'Approved' ? "bg-green-100 text-green-600" : "bg-orange-100 text-orange-600"
-                                        )}>
-                                            {row.status}
-                                        </span>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                {/* Tabs */}
+                <div className="mt-8">
+                    <div className="flex items-end gap-1 px-4 border-b border-slate-400">
+                        {tabs.map(tab => (
+                            <ClassicTab
+                                key={tab}
+                                label={tab}
+                                active={activeTab === tab}
+                                onClick={() => setActiveTab(tab)}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Tab Content */}
+                    <div className="bg-white border-x border-b border-slate-400 p-4 min-h-[500px]">
+                        {activeTab === 'Contents' && (
+                            <div className="space-y-2 animate-in fade-in duration-300">
+                                <h3 className="text-[11px] font-semibold text-slate-800">Time Recording</h3>
+
+                                <div className="border border-slate-400 overflow-x-auto">
+                                    <table className="w-full border-collapse text-[11px]">
+                                        <thead>
+                                            <tr className="bg-[#e0e0e0] border-b border-slate-400">
+                                                <th className="w-8 border-r border-slate-400 py-0.5 px-1 font-semibold text-slate-700">#</th>
+                                                <th className="w-24 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Date</th>
+                                                <th className="w-20 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Start Time</th>
+                                                <th className="w-20 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">End Time</th>
+                                                <th className="w-40 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Time Sheet Activity</th>
+                                                <th className="w-32 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Work Order No.</th>
+                                                <th className="w-32 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Financial Project</th>
+                                                <th className="w-32 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Cost Center</th>
+                                                <th className="w-24 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Stage</th>
+                                                <th className="w-32 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Labour Item</th>
+                                                <th className="w-32 border-r border-slate-400 py-0.5 px-1 font-semibold text-left text-slate-700">Service Call No.</th>
+                                                <th className="w-16 py-0.5 px-1 font-semibold text-slate-700">Billable</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((idx) => (
+                                                <tr key={idx} className="border-b border-slate-200 hover:bg-slate-50">
+                                                    <td className="border-r border-slate-300 py-0.5 px-1 text-center bg-[#f0f0f0]">{idx}</td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1 h-5"></td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1 relative">
+                                                        {idx === 1 && (
+                                                            <div className="absolute right-0 top-0 bottom-0 flex items-center px-1 bg-white border-l border-slate-300 cursor-pointer">
+                                                                <div className="w-0 h-0 border-l-[3px] border-l-transparent border-r-[3px] border-r-transparent border-t-[4px] border-t-slate-600"></div>
+                                                            </div>
+                                                        )}
+                                                    </td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1 bg-[#e8e8e8]"></td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1 bg-[#e8e8e8]"></td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                                    <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                                    <td className="py-0.5 px-1 text-center relative">
+                                                        {idx === 1 && (
+                                                            <div className="absolute inset-0 flex items-center justify-end px-1 pointer-events-none">
+                                                                <div className="text-blue-500 font-bold rotate-45">↗</div>
+                                                            </div>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+                        {activeTab === 'Attachments' && (
+                            <div className="flex items-center justify-center min-h-[400px] text-slate-400 italic text-[11px]">
+                                No attachments available.
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Footer buttons */}
+                <div className="flex gap-2 justify-end pt-4">
+                    <button className="px-6 py-1 bg-[#e0e0e0] border border-slate-400 text-[11px] font-bold text-slate-800 hover:bg-[#d4d4d4]">
+                        Cancel
+                    </button>
+                    <button className="px-6 py-1 bg-[#e0e0e0] border border-slate-400 text-[11px] font-bold text-slate-800 hover:bg-[#d4d4d4]">
+                        OK
+                    </button>
                 </div>
             </div>
         </div>
