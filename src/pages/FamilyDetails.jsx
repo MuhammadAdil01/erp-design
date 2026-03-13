@@ -1,113 +1,100 @@
 import React, { useState } from 'react';
-import {
-    Users,
-    Heart,
-    ChevronRight,
-    Plus,
-    Trash2,
-    Save,
-    Baby,
-    ShieldCheck,
-    Phone
-} from 'lucide-react';
 import { cn } from "@/lib/utils";
 
-const MemberCard = ({ member }) => (
-    <div className="glass-card p-6 rounded-3xl group relative hover:border-primary/50 transition-all">
-        <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <button className="p-2 bg-slate-50 text-slate-400 hover:text-primary rounded-xl transition-colors">
-                <Plus size={16} />
-            </button>
-            <button className="p-2 bg-slate-50 text-slate-400 hover:text-rose-500 rounded-xl transition-colors">
-                <Trash2 size={16} />
-            </button>
-        </div>
-
-        <div className="flex items-center gap-5 mb-6">
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                {member.relation === 'Child' ? <Baby size={24} /> : <Heart size={24} />}
-            </div>
-            <div>
-                <h4 className="font-bold text-slate-800 text-lg">{member.name}</h4>
-                <p className="text-xs font-bold text-primary uppercase tracking-widest">{member.relation}</p>
-            </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Date of Birth</p>
-                <p className="text-sm font-semibold text-slate-700">{member.dob}</p>
-            </div>
-            <div className="space-y-1">
-                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Medical Insurance</p>
-                <p className="text-sm font-semibold text-green-600">Active - {member.policyNo || 'POL-882'}</p>
-            </div>
-            <div className="space-y-1">
-                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">National ID / Passport</p>
-                <p className="text-sm font-semibold text-slate-700">{member.idNo || 'Verified'}</p>
-            </div>
-            <div className="space-y-1">
-                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Education Level</p>
-                <p className="text-sm font-semibold text-slate-700">{member.education || 'N/A'}</p>
-            </div>
-            <div className="col-span-2 space-y-1">
-                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Contact & Residency</p>
-                <p className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-                    <Phone size={14} className="text-slate-400" /> {member.phone}
-                </p>
-            </div>
+const ClassicInput = ({ label, value, type = "text", className, isSelect = false, options = [], disabled = false, isYellow = false }) => (
+    <div className={cn("flex items-center border-[0.5px] border-slate-400 bg-[#f0f0f0]", className)}>
+        <label className="w-28 px-2 py-0.5 text-[11px] font-semibold text-slate-700 border-r-[0.5px] border-slate-400 h-full flex items-center">
+            {label}
+        </label>
+        <div className={cn("flex-1 flex items-center relative h-full", isYellow ? "bg-[#fff9c4]" : "bg-white")}>
+            {isSelect ? (
+                <select className="flex-1 bg-transparent px-1 py-0.5 text-[11px] outline-none h-full cursor-pointer appearance-none">
+                    {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
+                </select>
+            ) : (
+                <input
+                    type={type}
+                    disabled={disabled}
+                    className={cn(
+                        "flex-1 px-1 py-0.5 text-[11px] outline-none h-full transition-colors",
+                        disabled ? "bg-[#e0e0e0] cursor-not-allowed" : "bg-transparent focus:bg-white"
+                    )}
+                    defaultValue={value}
+                />
+            )}
         </div>
     </div>
 );
 
 export default function FamilyDetails() {
-    const family = [
-        { name: 'Sarah Wilson', relation: 'Spouse', dob: 'Jan 12, 1990', phone: '+92 300 1234567' },
-        { name: 'Noah Wilson', relation: 'Child', dob: 'May 20, 2018', phone: 'Dependant' },
-        { name: 'Emma Wilson', relation: 'Child', dob: 'Aug 05, 2021', phone: 'Dependant' },
-    ];
-
     return (
-        <div className="space-y-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <div className="flex items-center gap-2 text-sm text-slate-500 mb-1">
-                        <span>Human Resources</span>
-                        <ChevronRight size={14} />
-                        <span className="text-primary font-medium">Family Details</span>
+        <div className="flex flex-col bg-[#f0f0f0] min-h-full font-sans select-none">
+            {/* Row 1: Header */}
+            <div className="h-[25px] flex items-center px-4 bg-gradient-to-b from-[#e6e6e6] to-[#cccccc] border-b border-slate-400 shadow-sm">
+                <span className="text-[12px] font-bold text-slate-800">Family Details</span>
+            </div>
+
+            {/* Row 2: Yellow Divider */}
+            <div className="h-[3px] w-full bg-[#f5a623]"></div>
+
+            {/* Main Content */}
+            <div className="p-4 space-y-6">
+                {/* Top Section: Dual Column Form */}
+                <div className="grid grid-cols-2 gap-x-20 max-w-[1200px]">
+                    {/* Left Column */}
+                    <div className="space-y-[2px]">
+                        <ClassicInput label="DocEntry" disabled />
+                        <ClassicInput label="Creator" disabled />
+                        <ClassicInput label="Employee ID" isYellow />
+                        <ClassicInput label="No of Children" isYellow />
                     </div>
-                    <h1 className="text-2xl font-bold text-primary">Family & Beneficiaries</h1>
+
+                    {/* Right Column */}
+                    <div className="space-y-[2px]">
+                        <ClassicInput label="Remark" isYellow />
+                        <ClassicInput label="DocNum" disabled />
+                        <ClassicInput label="Employee Name" />
+                    </div>
                 </div>
-                <div className="flex gap-3">
-                    <button className="px-5 py-2.5 rounded-xl bg-primary text-white hover:opacity-90 transition-all font-bold shadow-lg shadow-primary/20 flex items-center gap-2">
-                        <Plus size={18} /> Add Member
+
+                {/* Grid Section */}
+                <div className="mt-12">
+                    <div className="border border-slate-400 bg-white p-6 min-h-[400px]">
+                        <div className="border border-slate-400 overflow-hidden">
+                            <table className="w-full border-collapse text-[11px]">
+                                <thead>
+                                    <tr className="bg-[#e0e0e0] border-b border-slate-400 text-slate-700">
+                                        <th className="w-8 border-r border-slate-400 py-0.5 px-1 font-semibold text-left">#</th>
+                                        <th className="w-48 border-r border-slate-400 py-0.5 px-1 font-semibold text-left">LineId</th>
+                                        <th className="w-64 border-r border-slate-400 py-0.5 px-1 font-semibold text-left">Name</th>
+                                        <th className="w-64 border-r border-slate-400 py-0.5 px-1 font-semibold text-left">Relation</th>
+                                        <th className="border-r border-slate-400 py-0.5 px-1 font-semibold text-left">DOB</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((row) => (
+                                        <tr key={row} className="border-b border-slate-200 hover:bg-slate-50 h-5">
+                                            <td className="border-r border-slate-300 py-0.5 px-1 text-left bg-[#f0f0f0]">{row}</td>
+                                            <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                            <td className="border-r border-slate-300 py-0.5 px-1 font-normal"></td>
+                                            <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                            <td className="border-r border-slate-300 py-0.5 px-1"></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer buttons */}
+                <div className="flex gap-2 justify-start pt-4">
+                    <button className="px-8 py-1 bg-gradient-to-b from-[#f8f8f8] to-[#e0e0e0] border border-slate-400 text-[11px] font-bold text-slate-800 hover:brightness-95 shadow-sm min-w-[100px]">
+                        Add
                     </button>
-                </div>
-            </div>
-
-            <div className="glass-card rounded-[2.5rem] p-4 bg-slate-50/30 flex items-center gap-8 mb-8">
-                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center font-bold text-primary">
-                    JD
-                </div>
-                <div className="flex-1">
-                    <h2 className="text-lg font-bold text-slate-800">John Doe's Family</h2>
-                    <p className="text-sm text-slate-500">Manage dependents and emergency contacts</p>
-                </div>
-                <button className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-white transition-all font-semibold flex items-center gap-2">
-                    <ShieldCheck size={18} className="text-primary" /> Insurance Policy
-                </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {family.map((member, i) => (
-                    <MemberCard key={i} member={member} />
-                ))}
-                <div className="rounded-[2rem] border-2 border-dashed border-slate-200 flex flex-col items-center justify-center p-8 text-slate-400 group hover:border-primary/50 transition-colors cursor-pointer bg-slate-50/20 leading-relaxed text-center">
-                    <div className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <Plus size={24} />
-                    </div>
-                    <p className="font-bold text-sm">Add New Dependent</p>
-                    <p className="text-[10px] uppercase font-bold tracking-widest mt-1 opacity-60">Verified Records Required</p>
+                    <button className="px-8 py-1 bg-gradient-to-b from-[#f8f8f8] to-[#e0e0e0] border border-slate-400 text-[11px] font-bold text-slate-800 hover:brightness-95 shadow-sm min-w-[100px]">
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>

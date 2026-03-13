@@ -43,10 +43,8 @@ const menuItems = [
       { title: "Family Details", path: "/hr/family-details" },
       { title: "Final Settlement", path: "/hr/final-settlement" },
       { title: "Next of Kin", path: "/hr/next-of-kin" },
-      { title: "Leave Management", path: "/hr/leave-management" },
+      { title: "Leave Management", path: "/hr/leave-management" }, 
       { title: "TA/DA", path: "/hr/ta-da" },
-      { title: "Deductions", path: "/hr/deductions" },
-      { title: "Loans & Advances", path: "/hr/loans-advances" },
     ]
   },
   { title: "Project Management", isNested: false, path: "/projects" },
@@ -61,11 +59,11 @@ const SidebarItem = ({ item }) => {
   const isCategoryActive = hasChildren && item.children.some(c => location.pathname === c.path);
 
   return (
-    <div className="w-full border-b border-slate-300 last:border-b-0">
+    <div className="w-full border-b-[0.5px] p-2 border-slate-300  last:border-b-0">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "flex items-center w-full px-2 py-1 text-[13px] font-bold text-slate-900 hover:bg-[#c2c2c2] transition-colors text-left",
+          "flex items-center w-full px-2 py-0.5 text-[11px] font-bold text-slate-900 hover:bg-[#c2c2c2] transition-colors text-left",
           isCategoryActive && "bg-[#c2c2c2]"
         )}
       >
@@ -73,7 +71,7 @@ const SidebarItem = ({ item }) => {
       </button>
 
       {hasChildren && isOpen && (
-        <div className="bg-[#e0e0e0] py-0.5">
+        <div className="bg-[#e0e0e0]">
           {item.children.map((child, idx) => {
             const isActive = location.pathname === child.path;
             return (
@@ -81,13 +79,13 @@ const SidebarItem = ({ item }) => {
                 key={idx}
                 to={child.path}
                 className={cn(
-                  "flex items-center gap-2 pl-4 pr-2 py-0.5 text-[12px] text-slate-800 hover:bg-[#d4d4d4] transition-colors border-l-4 border-transparent",
-                  isActive && "bg-white/50 border-l-blue-500 font-semibold"
+                  "flex items-center gap-2 pl-4 pr-1 py-[1px] text-[11px] text-slate-800 hover:bg-[#d4d4d4] transition-colors border-l-[3px] border-transparent",
+                  isActive && "bg-white/60 border-l-blue-500 font-semibold"
                 )}
               >
                 {/* Classic Blue Folder Icon logic */}
-                <div className="w-4 h-4 flex items-center justify-center text-blue-600/80">
-                  {child.title.toLowerCase().includes('report') ? <FileText size={12} /> : <Folder size={12} fill="currentColor" opacity="0.4" />}
+                <div className="w-3.5 h-3.5 flex items-center justify-center text-blue-600/80">
+                  {child.title.toLowerCase().includes('report') ? <FileText size={10} /> : <Folder size={10} fill="currentColor" opacity="0.4" />}
                 </div>
                 <span>{child.title}</span>
               </Link>
@@ -101,7 +99,7 @@ const SidebarItem = ({ item }) => {
 
 export default function Sidebar() {
   return (
-    <aside className="w-full h-[calc(100vh-80px)] bg-[#d1d1d1] border-r border-slate-300 flex flex-col overflow-y-auto no-scrollbar select-none">
+    <aside className="w-full h-full bg-[#d1d1d1] border-r border-slate-300 flex flex-col overflow-y-auto no-scrollbar select-none">
       <nav className="flex-1">
         {menuItems.map((item, idx) => (
           <SidebarItem key={idx} item={item} />

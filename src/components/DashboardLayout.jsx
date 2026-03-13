@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }) {
 
             <div className='flex flex-1 overflow-hidden'>
                 {/* Sidebar has fixed width and scrolls independently */}
-                <div className='w-[280px] flex-shrink-0'>
+                <div className='w-[280px] flex-shrink-0 h-full bg-[#d1d1d1]'>
                     <Sidebar />
                 </div>
 
