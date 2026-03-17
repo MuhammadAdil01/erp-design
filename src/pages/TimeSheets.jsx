@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { cn } from "@/lib/utils";
-import { Search } from 'lucide-react';
 
-const ClassicInput = ({ label, value, type = "text", className, isSelect = false, options = [], disabled = false, isSearch = false }) => (
+const ClassicInput = ({ label, value, type = "text", className, isSelect = false, options = [], isSearch = false }) => (
     <div className={cn("flex items-center border-[0.5px] border-slate-400 bg-[#f0f0f0]", className)}>
         <label className="w-24 px-2 py-0.5 text-[11px] font-semibold text-slate-700 border-r-[0.5px] border-slate-400 h-full flex items-center">
             {label}
@@ -15,10 +14,9 @@ const ClassicInput = ({ label, value, type = "text", className, isSelect = false
             ) : (
                 <input
                     type={type}
-                    disabled={disabled}
                     className={cn(
                         "flex-1 px-1 py-0.5 text-[11px] outline-none h-full transition-colors",
-                        disabled ? "bg-[#e0e0e0] cursor-not-allowed" : "bg-transparent focus:bg-white"
+                      "bg-transparent focus:bg-white bg"
                     )}
                     defaultValue={value}
                 />
@@ -56,6 +54,7 @@ export default function TimeSheets() {
             <div className="h-[25px] flex items-center px-4 bg-gradient-to-b from-[#e6e6e6] to-[#cccccc] border-b border-slate-400 shadow-sm">
                 <span className="text-[12px] font-bold text-slate-800">Time Sheet</span>
             </div>
+         
 
             {/* Row 2: Yellow Divider */}
             <div className="h-[3px] w-full bg-[#f5a623]"></div>
@@ -68,14 +67,14 @@ export default function TimeSheets() {
                     <div className="space-y-[2px]">
                         <ClassicInput label="Type" isSelect options={['Employee', 'User', 'Other']} />
                         <ClassicInput label="Code" isSearch />
-                        <ClassicInput label="Name" disabled />
-                        <ClassicInput label="First Name" disabled />
+                        <ClassicInput label="Name" />
+                        <ClassicInput label="First Name" />
                         <ClassicInput label="Department" isSelect options={['', 'Engineering', 'Finance', 'HR']} />
                     </div>
 
                     {/* Right Form */}
                     <div className="space-y-[2px] w-64 ml-auto">
-                        <ClassicInput label="No." value="50" disabled />
+                        <ClassicInput label="No." value="50"  />
                         <ClassicInput label="Date From" value="24.02.26" className="bg-white" />
                         <ClassicInput label="Date To" className="bg-white" />
                     </div>
@@ -127,7 +126,7 @@ export default function TimeSheets() {
                                                     <td className="border-r border-slate-300 py-0.5 px-1"></td>
                                                     <td className="border-r border-slate-300 py-0.5 px-1 relative">
                                                         {idx === 1 && (
-                                                            <div className="absolute right-0 top-0 bottom-0 flex items-center px-1 bg-white border-l border-slate-300 cursor-pointer">
+                                                            <div className="absolute right-0 top-0 bottom-0 flex items-center px-1 bg-white     border-l border-slate-300 cursor-pointer">
                                                                 <div className="w-0 h-0 border-l-[3px] border-l-transparent border-r-[3px] border-r-transparent border-t-[4px] border-t-slate-600"></div>
                                                             </div>
                                                         )}

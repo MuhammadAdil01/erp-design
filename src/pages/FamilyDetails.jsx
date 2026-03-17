@@ -43,8 +43,8 @@ export default function FamilyDetails() {
                 <div className="grid grid-cols-2 gap-x-20 max-w-[1200px]">
                     {/* Left Column */}
                     <div className="space-y-[2px]">
-                        <ClassicInput label="DocEntry" disabled />
-                        <ClassicInput label="Creator" disabled />
+                        <ClassicInput label="DocEntry"  />
+                        <ClassicInput label="Creator"  />
                         <ClassicInput label="Employee ID" isYellow />
                         <ClassicInput label="No of Children" isYellow />
                     </div>
@@ -52,7 +52,7 @@ export default function FamilyDetails() {
                     {/* Right Column */}
                     <div className="space-y-[2px]">
                         <ClassicInput label="Remark" isYellow />
-                        <ClassicInput label="DocNum" disabled />
+                        <ClassicInput label="DocNum"  />
                         <ClassicInput label="Employee Name" />
                     </div>
                 </div>

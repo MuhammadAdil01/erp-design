@@ -43,8 +43,8 @@ export default function FinalSettlement() {
                 <div className="grid grid-cols-2 gap-x-20 max-w-[1200px]">
                     {/* Left Column */}
                     <div className="space-y-[2px]">
-                        <ClassicInput label="DocEntry" disabled />
-                        <ClassicInput label="CreateDate" disabled />
+                        <ClassicInput label="DocEntry"  />
+                        <ClassicInput label="CreateDate"  />
                         <ClassicInput label="Remark" isYellow />
                         <ClassicInput label="Employee Name" />
                         <ClassicInput label="Grade" />
@@ -52,8 +52,8 @@ export default function FinalSettlement() {
 
                     {/* Right Column */}
                     <div className="space-y-[2px]">
-                        <ClassicInput label="Status" value="O" disabled />
-                        <ClassicInput label="Creator" disabled />
+                        <ClassicInput label="Status"  />
+                        <ClassicInput label="Creator" />
                         <ClassicInput label="Employee Code" />
                         <ClassicInput label="DHAB No" />
                         <ClassicInput label="Stage" />

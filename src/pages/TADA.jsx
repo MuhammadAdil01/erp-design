@@ -45,9 +45,9 @@ export default function TADA() {
                 <div className="grid grid-cols-2 gap-x-20 max-w-[1200px]">
                     {/* Left Column */}
                     <div className="space-y-[2px]">
-                        <ClassicInput label="DocEntry" disabled />
-                        <ClassicInput label="Status" value="O" disabled />
-                        <ClassicInput label="Creator" disabled />
+                        <ClassicInput label="DocEntry" />
+                        <ClassicInput label="Status" />
+                        <ClassicInput label="Creator"  />
                         <ClassicInput label="Employee ID" />
                         <ClassicInput label="Designation" />
                         <ClassicInput label="Grade" />
@@ -58,8 +58,8 @@ export default function TADA() {
 
                     {/* Right Column */}
                     <div className="space-y-[2px]">
-                        <ClassicInput label="DocNum" disabled />
-                        <ClassicInput label="CreateDate" disabled />
+                        <ClassicInput label="DocNum"  />
+                        <ClassicInput label="CreateDate"  />
                         <ClassicInput label="Remark" isYellow />
                         <ClassicInput label="Employee Name" />
                         <ClassicInput label="Phone" />

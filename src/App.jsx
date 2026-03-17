@@ -17,10 +17,8 @@ import PostingTemplates from './pages/financials/PostingTemplates';
 import RecurringPostings from './pages/financials/RecurringPostings';
 import InternalReconciliations from './pages/financials/InternalReconciliations';
 import PMSRate from './pages/financials/PMSRate';
-import LeaveManagement from './pages/LeaveManagement';
 import TADA from './pages/TADA';
-import Deductions from './pages/Deductions';
-import LoansAdvances from './pages/LoansAdvances';
+
 import {
   Users,
   TrendingUp,
@@ -38,12 +36,8 @@ const DashboardHome = () => {
 
   if (!subMenu) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh] text-center px-4">
-        <div className="space-y-4">
-          <h1 className="text-5xl font-extrabold text-slate-800 tracking-tight">hello dashboard</h1>
-          <p className="text-slate-500 font-medium">Select a category from the top menu to get started</p>
-        </div>
-      </div>
+<>
+</>
     );
   }
 
@@ -110,11 +104,7 @@ function App() {
           <Route path="/financials/pms-rate" element={<PMSRate />} />
 
           {/* HR Expansion */}
-          <Route path="/hr/leave-management" element={<LeaveManagement />} />
           <Route path="/hr/ta-da" element={<TADA />} />
-          <Route path="/hr/deductions" element={<Deductions />} />
-          <Route path="/hr/loans-advances" element={<LoansAdvances />} />
-
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </DashboardLayout>
