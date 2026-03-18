@@ -256,6 +256,8 @@ export const menuItems = [
     ]
   },
   { title: "CRM", isNested: false, path: "/crm" },
+  { title: "Opportunities", isNested: false, path: "/opportunities" },
+
   { title: "Sales - A/R", isNested: false, path: "/sales" },
   { title: "Purchasing - A/P", isNested: false, path: "/purchasing" },
   { title: "Business Partners", isNested: false, path: "/partners" },
@@ -264,6 +266,8 @@ export const menuItems = [
   { title: "Resources", isNested: false, path: "/resources" },
   { title: "Production", isNested: false, path: "/production" },
   { title: "MRP", isNested: false, path: "/mrp" },
+  { title: " HR Payroll", isNested: false, path: "/Payroll" },
+
   { title: "Service", isNested: false, path: "/services" },
   {
     title: "Human Resources",

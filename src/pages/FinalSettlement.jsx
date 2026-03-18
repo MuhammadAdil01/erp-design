@@ -55,7 +55,7 @@ export default function FinalSettlement() {
                         <ClassicInput label="Status"  />
                         <ClassicInput label="Creator" />
                         <ClassicInput label="Employee Code" />
-                        <ClassicInput label="DHAB No" />
+                        <ClassicInput label="Staff No" />
                         <ClassicInput label="Stage" />
                     </div>
                 </div>

@@ -65,7 +65,7 @@ export default function TADA() {
                         <ClassicInput label="Phone" />
                         <ClassicInput label="Department" />
                         <ClassicInput label="From" />
-                        <ClassicInput label="DHAB No" />
+                        <ClassicInput label="Staff No" />
                     </div>
                 </div>
 

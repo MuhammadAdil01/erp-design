@@ -67,7 +67,7 @@ export default function EmployeeMaster() {
 
                     {/* Right Column */}
                     <div className="space-y-[2px]">
-                        <ClassicInput label="DHAB No." value="" />
+                        <ClassicInput label="Staff No." value="" />
                         <ClassicInput label="ID No." value="" />
                         <ClassicInput label="Ext. Employee No." value="" />
                         <ClassicInput label="Office Phone" value="" />

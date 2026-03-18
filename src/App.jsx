@@ -18,6 +18,11 @@ import RecurringPostings from './pages/financials/RecurringPostings';
 import InternalReconciliations from './pages/financials/InternalReconciliations';
 import PMSRate from './pages/financials/PMSRate';
 import TADA from './pages/TADA';
+import ChooseCompany from './pages/ChooseCompany';
+import ExchangeRatesIndexes from './pages/ExchangeRatesIndexes';
+import CompanyDetails from './pages/administration/CompanyDetails';
+import GeneralSettings from './pages/administration/GeneralSettings';
+import PostingPeriods from './pages/administration/PostingPeriods';
 
 import {
   Users,
@@ -105,8 +110,16 @@ function App() {
 
           {/* HR Expansion */}
           <Route path="/hr/ta-da" element={<TADA />} />
+          
+          {/* Administration */}
+          <Route path="/choose-company" element={<ChooseCompany />} />
+          <Route path="/exchange-rates-indexes" element={<ExchangeRatesIndexes />} />
+          <Route path="/administration/system-initialization/company-details" element={<CompanyDetails />} />
+          <Route path="/administration/system-initialization/general-settings" element={<GeneralSettings />} />
+          <Route path="/administration/system-initialization/posting-periods" element={<PostingPeriods />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+
       </DashboardLayout>
     </Router>
   );
