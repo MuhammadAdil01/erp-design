@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
+import InlineWindowView from '@/components/InlineWindowView';
 
 export default function DashboardLayout({ children }) {
     return (
@@ -16,6 +17,7 @@ export default function DashboardLayout({ children }) {
 
                 {/* Content area fills the rest and scrolls */}
                 <div className="flex-1 overflow-y-auto bg-white">
+                    <InlineWindowView />
                     <main className="p-4 min-h-full">
                         <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
                             {children}

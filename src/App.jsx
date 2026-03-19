@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, Link } from 'react-router-dom';
 import DashboardLayout from './components/DashboardLayout';
-import EmployeeMaster from './pages/EmployeeMaster';
-import TimeSheets from './pages/TimeSheets';
-import HRReports from './pages/HRReports';
-import FamilyDetails from './pages/FamilyDetails';
-import FinalSettlement from './pages/FinalSettlement';
-import NextOfKin from './pages/NextOfKin';
+import { WindowProvider } from './context/WindowContext';
+import WindowLayer from './components/WindowLayer';
+import EmployeeMaster from './pages/human-resources/EmployeeMaster';
+import TimeSheets from './pages/human-resources/TimeSheets';
+import HRReports from './pages/human-resources/HRReports';
+import FamilyDetails from './pages/human-resources/FamilyDetails';
+import FinalSettlement from './pages/human-resources/FinalSettlement';
+import NextOfKin from './pages/human-resources/NextOfKin';
 import ChartOfAccounts from './pages/financials/ChartOfAccounts';
 import JournalEntry from './pages/financials/JournalEntry';
 import BudgetSetup from './pages/financials/BudgetSetup';
@@ -17,12 +19,13 @@ import PostingTemplates from './pages/financials/PostingTemplates';
 import RecurringPostings from './pages/financials/RecurringPostings';
 import InternalReconciliations from './pages/financials/InternalReconciliations';
 import PMSRate from './pages/financials/PMSRate';
-import TADA from './pages/TADA';
+import TADA from './pages/human-resources/TADA';
 import ChooseCompany from './pages/ChooseCompany';
 import ExchangeRatesIndexes from './pages/ExchangeRatesIndexes';
 import CompanyDetails from './pages/administration/CompanyDetails';
 import GeneralSettings from './pages/administration/GeneralSettings';
 import PostingPeriods from './pages/administration/PostingPeriods';
+import EmployeeCurrentInfo from './pages/payroll/EmployeeCurrentInfo';
 
 import {
   Users,
@@ -85,42 +88,45 @@ const DashboardHome = () => {
 function App() {
   return (
     <Router>
-      <DashboardLayout>
-        <Routes>
-          <Route path="/" element={<DashboardHome />} />
-          <Route path="/hr/employees" element={<EmployeeMaster />} />
-          <Route path="/hr/timesheets" element={<TimeSheets />} />
-          <Route path="/hr/reports" element={<HRReports />} />
-          <Route path="/hr/family-details" element={<FamilyDetails />} />
-          <Route path="/hr/final-settlement" element={<FinalSettlement />} />
-          <Route path="/hr/next-of-kin" element={<NextOfKin />} />
+      <WindowProvider>
+        <DashboardLayout>
+          <Routes>
+            <Route path="/" element={<DashboardHome />} />
+            <Route path="/hr/employees" element={<EmployeeMaster />} />
+            <Route path="/hr/timesheets" element={<TimeSheets />} />
+            <Route path="/hr/reports" element={<HRReports />} />
+            <Route path="/hr/family-details" element={<FamilyDetails />} />
+            <Route path="/hr/final-settlement" element={<FinalSettlement />} />
+            <Route path="/hr/next-of-kin" element={<NextOfKin />} />
 
-          {/* Financials */}
-          <Route path="/financials/charts-of-accounts" element={<ChartOfAccounts />} />
-          <Route path="/financials/journel-entry" element={<JournalEntry />} />
-          <Route path="/financials/budget-setup" element={<BudgetSetup />} />
-          <Route path="/financials/fixed-assets" element={<FixedAssets />} />
-          <Route path="/financials/cost-accounting" element={<CostAccounting />} />
-          <Route path="/financials/financial-reports" element={<FinancialReports />} />
-          <Route path="/financials/edit-charts-of-accounts" element={<EditChartOfAccounts />} />
-          <Route path="/financials/posting-templates" element={<PostingTemplates />} />
-          <Route path="/financials/recurring-postings" element={<RecurringPostings />} />
-          <Route path="/financials/internal-reconcilations" element={<InternalReconciliations />} />
-          <Route path="/financials/pms-rate" element={<PMSRate />} />
+            {/* Financials */}
+            <Route path="/financials/charts-of-accounts" element={<ChartOfAccounts />} />
+            <Route path="/financials/journel-entry" element={<JournalEntry />} />
+            <Route path="/financials/budget-setup" element={<BudgetSetup />} />
+            <Route path="/financials/fixed-assets" element={<FixedAssets />} />
+            <Route path="/financials/cost-accounting" element={<CostAccounting />} />
+            <Route path="/financials/financial-reports" element={<FinancialReports />} />
+            <Route path="/financials/edit-charts-of-accounts" element={<EditChartOfAccounts />} />
+            <Route path="/financials/posting-templates" element={<PostingTemplates />} />
+            <Route path="/financials/recurring-postings" element={<RecurringPostings />} />
+            <Route path="/financials/internal-reconcilations" element={<InternalReconciliations />} />
+            <Route path="/financials/pms-rate" element={<PMSRate />} />
 
-          {/* HR Expansion */}
-          <Route path="/hr/ta-da" element={<TADA />} />
-          
-          {/* Administration */}
-          <Route path="/choose-company" element={<ChooseCompany />} />
-          <Route path="/exchange-rates-indexes" element={<ExchangeRatesIndexes />} />
-          <Route path="/administration/system-initialization/company-details" element={<CompanyDetails />} />
-          <Route path="/administration/system-initialization/general-settings" element={<GeneralSettings />} />
-          <Route path="/administration/system-initialization/posting-periods" element={<PostingPeriods />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-
-      </DashboardLayout>
+            {/* HR Expansion */}
+            <Route path="/hr/ta-da" element={<TADA />} />
+            
+            {/* Administration */}
+            <Route path="/choose-company" element={<ChooseCompany />} />
+            <Route path="/exchange-rates-indexes" element={<ExchangeRatesIndexes />} />
+            <Route path="/administration/system-initialization/company-details" element={<CompanyDetails />} />
+            <Route path="/administration/system-initialization/general-settings" element={<GeneralSettings />} />
+            <Route path="/administration/system-initialization/posting-periods" element={<PostingPeriods />} />
+            <Route path="/payroll/masters/employee-current-info" element={<EmployeeCurrentInfo />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </DashboardLayout>
+        <WindowLayer />
+      </WindowProvider>
     </Router>
   );
 }

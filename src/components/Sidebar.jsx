@@ -266,8 +266,39 @@ export const menuItems = [
   { title: "Resources", isNested: false, path: "/resources" },
   { title: "Production", isNested: false, path: "/production" },
   { title: "MRP", isNested: false, path: "/mrp" },
-  { title: " HR Payroll", isNested: false, path: "/Payroll" },
-
+  { 
+    title: " HR Payroll", 
+    isNested: true, 
+    path: "/Payroll",
+    children: [
+      { 
+        title: "Masters", 
+        isNested: true,
+        children: [
+          { title: "Employee Current Information", path: "/payroll/masters/employee-current-info" },
+          { title: "Pay Period Master", path: "/payroll/masters/pay-period-master" },
+          { title: "Grade Master", path: "/payroll/masters/grade-master" },
+          { title: "Loan Master", path: "/payroll/masters/loan-master" },
+          { title: "Leave Master", path: "/payroll/masters/leave-master" },
+          { title: "Employee Type", path: "/payroll/masters/employee-type" },
+          { title: "Shift Master", path: "/payroll/masters/shift-master" },
+          { title: "TaxFormulaMaster", path: "/payroll/masters/tax-formula-master" },
+          { title: "Grade Pay Scale", path: "/payroll/masters/grade-pay-scale" },
+        ]
+      },
+      { 
+        title: "Transaction", 
+        isNested: true,
+        children: [
+          { title: "Monthly Attendance Sheet", path: "/payroll/transactions/monthly-attendance" },
+          { title: "PayRoll Process", path: "/payroll/transactions/payroll-process" },
+          { title: "Loan/Salary Advance Application", path: "/payroll/transactions/loan-advance" },
+          { title: "Leave Application", path: "/payroll/transactions/leave-application" },
+          { title: "Payroll Monthly Adjustments", path: "/payroll/transactions/monthly-adjustments" },
+        ]
+      }
+    ]
+  },
   { title: "Service", isNested: false, path: "/services" },
   {
     title: "Human Resources",
