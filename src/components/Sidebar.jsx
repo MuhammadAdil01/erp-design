@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronRight, Folder, FileText } from 'lucide-react';
+import { 
+  ChevronRight, Folder, FileText, Layout, Home, ShoppingCart, 
+  Settings, DollarSign, PenTool, LayoutDashboard, MessageSquare, 
+  Globe, BarChart3, PieChart, Briefcase, Zap, Box, User
+} from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 export const menuItems = [
@@ -428,14 +432,172 @@ const SidebarNode = ({ item, depth = 0 }) => {
   return <SidebarLeaf item={item} depth={depth} isActive={location.pathname === item.path} />;
 };
 
-export default function Sidebar() {
+const CockpitView = () => {
+  const [isGalleryOpen, setIsGalleryOpen] = useState(true);
+  const [isPurchasingOpen, setIsPurchasingOpen] = useState(true);
+  
+  const cockpitItems = [
+    { title: "My Cockpit", icon: <div className="text-slate-600 flex items-center"><Box size={14} /><User size={10} className="text-green-600 -ml-1 border border-white bg-white rounded-full" /></div> },
+    { title: "Home", icon: <Home size={14} className="text-slate-600" /> },
+    { title: "Sales", icon: <div className="flex items-center"><User size={12} className="text-green-600" /><DollarSign size={10} className="text-blue-500 -ml-1" /></div> },
+    { title: "Service", icon: <PenTool size={14} className="text-blue-500" /> },
+    { title: "Finance", icon: <div className="flex items-center text-green-600"><PieChart size={12} fill="currentColor" opacity="0.5" /><BarChart3 size={10} className="-ml-1" /></div> },
+    { 
+      title: "Purchasing (Current)", 
+      icon: <ShoppingCart size={14} className="text-blue-600" />, 
+      active: true,
+      hasSubItems: true,
+      isOpen: isPurchasingOpen,
+      onToggle: () => setIsPurchasingOpen(!isPurchasingOpen)
+    },
+    { title: "Widget Gallery", icon: <div className="flex items-center text-slate-600"><Settings size={12} /><User size={8} className="text-green-600 -ml-1" /></div>, isFolder: true, isOpen: isGalleryOpen, onToggle: () => setIsGalleryOpen(!isGalleryOpen) },
+  ];
+
+  const purchasingSubItems = [
+    { title: "Purchase Request", path: "/purchasing/purchase-request" },
+    { title: "Purchase Quotation", path: "/purchasing/purchase-quotation" },
+    { title: "Purchase Order", path: "/purchasing/purchase-order" },
+    { title: "Goods Receipt PO", path: "/purchasing/goods-receipt-po" },
+    { title: "Goods Return Request" },
+    { title: "Goods Return" },
+    { title: "A/P Down Payment Request" },
+    { title: "A/P Down Payment Invoice" },
+    { title: "A/P Invoice" },
+    { title: "A/P Credit Memo" },
+    { title: "A/P Reserve Invoice" },
+    { title: "Recurring Transactions" },
+    { title: "Recurring Transaction Templates" },
+    { title: "Landed Costs" },
+    { title: "Document Printing" },
+    { title: "Purchasing Reports", isFolder: true },
+  ];
+
+  const galleryItems = [
+    { title: "Common Functions", icon: <LayoutDashboard size={14} className="text-slate-500" /> },
+    { title: "Open Documents", icon: <div className="relative"><FileText size={14} className="text-slate-400" /><div className="absolute top-1 right-0 text-green-600"><Zap size={8} fill="currentColor" /></div></div> },
+    { title: "Messages and Alerts", icon: <div className="w-full h-full bg-red-700 flex items-center justify-center"><Zap size={10} className="text-white fill-white" /></div> },
+    { title: "Browser", icon: <Globe size={14} className="text-blue-400" /> },
+    { title: "KPI Widget", icon: <BarChart3 size={14} className="text-blue-300" /> },
+    { title: "Dashboard Widget", icon: <PieChart size={14} className="text-orange-400" /> },
+  ];
+
   return (
-    <aside className="w-full h-full bg-[#d1d1d1] border-r border-slate-300 flex flex-col overflow-y-auto no-scrollbar select-none">
-      <nav className="flex-1">
-        {menuItems.map((item, idx) => (
-          <SidebarNode key={idx} item={item} />
-        ))}
-      </nav>
+    <div className="flex-1 bg-[#eeeeee] overflow-y-auto no-scrollbar">
+      <div className="flex flex-col">
+         {cockpitItems.map((item, idx) => (
+           <React.Fragment key={idx}>
+             <div 
+               className={cn(
+                 "flex items-center gap-2 px-3 py-1.5 text-[11px] font-semibold border-b border-slate-300 cursor-pointer hover:bg-slate-300/50 transition-colors",
+                 item.active ? "bg-[#ffb300] text-slate-900 border-white/20" : "text-slate-800"
+               )}
+               onClick={item.onToggle}
+             >
+               <div className="w-5 h-5 flex items-center justify-center shrink-0">
+                 {item.icon}
+               </div>
+               <span className="flex-1">{item.title}</span>
+             </div>
+
+             {item.hasSubItems && item.isOpen && (
+               <div className="bg-[#e9e9e9]">
+                 {purchasingSubItems.map((sItem, sIdx) => (
+                   <Link 
+                     key={sIdx} 
+                     to={sItem.path || "#"}
+                     className="flex items-center gap-2 px-8 py-1.5 text-[11px] text-slate-800 border-b border-white hover:bg-white transition-colors cursor-pointer group no-underline"
+                   >
+                      <div className="w-4 h-3.5 border border-slate-400 bg-white/50 flex flex-col gap-[1px] p-[1px] shrink-0">
+                        <div className="h-[2px] w-full bg-blue-300/60" />
+                        <div className="h-[2px] w-[70%] bg-blue-300/60" />
+                      </div>
+                      <span className="flex-1 group-hover:underline">{sItem.title}</span>
+                      {sItem.isFolder && <Folder size={12} className="text-blue-500 fill-current opacity-40" />}
+                   </Link>
+                 ))}
+               </div>
+             )}
+
+             {item.isFolder && item.isOpen && (
+               <div className="bg-[#e2e2e2]">
+                 <div className="flex items-center gap-2 px-6 py-1.5 text-[11px] text-slate-700 font-bold border-b border-slate-300">
+                    <Folder size={14} className="text-blue-500 fill-current opacity-40 shrink-0" />
+                    General Widgets
+                 </div>
+                 {galleryItems.map((gItem, gIdx) => (
+                    <div key={gIdx} className="flex items-center gap-2 px-10 py-1 text-[11px] text-slate-800 border-b border-slate-200 last:border-b-transparent hover:bg-slate-300/30 cursor-pointer">
+                      <div className="w-5 h-5 flex items-center justify-center border border-slate-400 bg-white shadow-sm shrink-0">
+                        {gItem.icon}
+                      </div>
+                      <span className="flex-1">{gItem.title}</span>
+                    </div>
+                 ))}
+               </div>
+             )}
+           </React.Fragment>
+         ))}
+      </div>
+    </div>
+  );
+};
+
+export default function Sidebar() {
+  const [activeTab, setActiveTab] = useState('modules'); // 'cockpit', 'modules', 'drag'
+
+  const VerticalTab = ({ id, label, active }) => (
+    <div 
+      onClick={() => setActiveTab(id)}
+      className={cn(
+        "flex flex-col items-center justify-center w-[30px] border-r border-b border-slate-300 py-10 cursor-pointer transition-colors relative",
+        active ? "bg-white" : "bg-[#c0c0c0]"
+      )}
+    >
+      <span 
+        className={cn(
+          "text-[10px] whitespace-nowrap font-bold",
+          active ? "text-slate-900" : "text-slate-600"
+        )}
+        style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+      >
+        {label}
+      </span>
+      {active && <div className="absolute right-0 top-0 bottom-0 w-[3px] bg-blue-500 shadow-[0_0_5px_blue]" />}
+    </div>
+  );
+
+  return (
+    <aside className="w-full h-full bg-[#d1d1d1] border-r border-slate-300 flex select-none overflow-hidden">
+      {/* Vertical Tabs Bar */}
+      <div className="w-[30px] flex flex-col bg-[#c0c0c0] border-r border-slate-400">
+        <VerticalTab id="cockpit" label="My Cockpit" active={activeTab === 'cockpit'} />
+        <VerticalTab id="modules" label="Modules" active={activeTab === 'modules'} />
+        <VerticalTab id="drag" label="Drag & Relate" active={activeTab === 'drag'} />
+        <div className="flex-1 bg-[#c0c0c0]" />
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top collapse button */}
+        <div className="h-4 bg-[#e0e0e0] flex items-center justify-end px-2 border-b border-slate-300">
+          <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[6px] border-b-blue-900 rotate-90 scale-75 cursor-pointer" />
+        </div>
+
+        {activeTab === 'cockpit' && <CockpitView />}
+        
+        {activeTab === 'modules' && (
+          <nav className="flex-1 overflow-y-auto no-scrollbar">
+            {menuItems.map((item, idx) => (
+              <SidebarNode key={idx} item={item} />
+            ))}
+          </nav>
+        )}
+
+        {activeTab === 'drag' && (
+          <div className="flex-1 bg-[#e0e0e0] flex items-center justify-center text-[11px] text-slate-500 italic">
+            Drag & Relate View
+          </div>
+        )}
+      </div>
     </aside>
   );
 }

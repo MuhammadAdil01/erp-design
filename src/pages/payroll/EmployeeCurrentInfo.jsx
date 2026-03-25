@@ -1,106 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Camera, X } from 'lucide-react';
 import { useWindowContext } from '@/context/WindowContext';
-
-function cn(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
-
-
-const ClassicTab = ({ label, active, onClick }) => (
-  <button
-    onClick={onClick}
-    className={cn(
-      'px-6 py-[4px] text-[11px] border-t border-x border-slate-400 rounded-t-[3px] transition-colors relative',
-      active
-        ? 'bg-[#f0f0f0] -mb-[1px] z-10 border-b-transparent font-semibold'
-        : 'bg-gradient-to-b from-[#e6e6e6] to-[#cccccc] hover:from-[#f0f0f0] hover:to-[#e6e6e6]'
-    )}
-  >
-    {label}
-  </button>
-);
-
-const FieldRow = ({ label, children, required = false }) => (
-  <div className="flex items-center gap-2 mb-[2px]">
-    <span className={cn('text-[11px] text-slate-800 w-[140px] shrink-0', required && 'font-semibold')}>
-      {label} {required && '*'}
-    </span>
-    <div className="flex-1 flex items-center">{children}</div>
-  </div>
-);
-
-/**
- * Controlled input.
- * - Accepts `value` + `onChange` (controlled mode).
- * - Falls back to an empty string so React never sees an undefined value.
- * - `yellow` tints the background; `showLookup` shows the magnifier button.
- */
-const ClassicInput = ({ value = '', onChange, yellow = false, showLookup = false, className }) => (
-  <div className="relative flex-1 flex items-center">
-    <input
-      type="text"
-      value={value}
-      onChange={onChange ?? (() => {})}   // always provide onChange for controlled input
-      className={cn(
-        'w-full border border-slate-400 px-1 text-[11px] h-[19px] outline-none',
-        yellow ? 'bg-[#fff9c4]' : 'bg-white',
-        className
-      )}
-    />
-    {showLookup && (
-      <button
-        type="button"
-        className="absolute right-0 top-0 h-full w-[19px] bg-[#fcf096] border-l border-slate-400 flex items-center justify-center hover:bg-[#f4d142] transition-colors"
-      >
-        <div className="w-3 h-3 border border-slate-600 rounded-full flex items-center justify-center">
-          <div className="w-[2px] h-[2px] bg-slate-600 rounded-full" />
-        </div>
-      </button>
-    )}
-  </div>
-);
-
-/**
- * Controlled select.
- * - Accepts `value` + `onChange`.
- */
-const ClassicSel = ({ options = [], value = '', onChange, className }) => (
-  <select
-    value={value}
-    onChange={onChange ?? (() => {})}
-    className={cn(
-      'flex-1 border border-slate-400 px-1 text-[11px] h-[19px] outline-none bg-white appearance-none cursor-pointer pr-4',
-      className
-    )}
-    style={{
-      backgroundImage:
-        "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")",
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'right 2px center',
-      backgroundSize: '12px',
-    }}
-  >
-    {options.map((o) => (
-      <option key={o} value={o}>
-        {o}
-      </option>
-    ))}
-  </select>
-);
-
-const YellowBtn = ({ children, onClick, className }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className={cn(
-      'px-4 py-[2px] text-[11px] bg-gradient-to-b from-[#fcf096] to-[#f4d142] border border-slate-500 rounded-[2px] text-slate-800 hover:shadow-inner active:from-[#f4d142] active:to-[#fcf096] whitespace-nowrap',
-      className
-    )}
-  >
-    {children}
-  </button>
-);
+import { 
+  ClassicTab, 
+  FieldRow, 
+  ClassicInput, 
+  ClassicSel, 
+  YellowBtn,
+  cn 
+} from '@/components/ClassicERPUI';
 
 const ImageBox = ({ onRemove, onCapture }) => (
   <div className="relative w-[120px] h-[150px] border border-slate-400 bg-white flex items-center justify-center group shrink-0">

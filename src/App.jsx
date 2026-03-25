@@ -26,6 +26,23 @@ import CompanyDetails from './pages/administration/CompanyDetails';
 import GeneralSettings from './pages/administration/GeneralSettings';
 import PostingPeriods from './pages/administration/PostingPeriods';
 import EmployeeCurrentInfo from './pages/payroll/EmployeeCurrentInfo';
+import PayPeriodMaster from './pages/payroll/PayPeriodMaster';
+import GradeMaster from './pages/payroll/GradeMaster';
+import LoanMaster from './pages/payroll/LoanMaster';
+import LeaveMaster from './pages/payroll/LeaveMaster';
+import EmployeeCategoryMaster from './pages/payroll/EmployeeCategoryMaster';
+import ShiftMaster from './pages/payroll/ShiftMaster';
+import GradePayScale from './pages/payroll/GradePayScale';
+import TaxFormulaCalculation from './pages/payroll/TaxFormulaCalculation';
+import MonthlyAttendanceSheet from './pages/payroll/MonthlyAttendanceSheet';
+import PayrollProcess from './pages/payroll/PayrollProcess';
+import LoanApplication from './pages/payroll/LoanApplication';
+import LeaveApplication from './pages/payroll/LeaveApplication';
+import MonthlyDeductions from './pages/payroll/MonthlyDeductions';
+import PurchaseRequest from './pages/purchasing/PurchaseRequest';
+import PurchaseQuotation from './pages/purchasing/PurchaseQuotation';
+import PurchaseOrder from './pages/purchasing/PurchaseOrder';
+import GoodsReceiptPO from './pages/purchasing/GoodsReceiptPO';
 
 import {
   Users,
@@ -122,6 +139,23 @@ function App() {
             <Route path="/administration/system-initialization/general-settings" element={<GeneralSettings />} />
             <Route path="/administration/system-initialization/posting-periods" element={<PostingPeriods />} />
             <Route path="/payroll/masters/employee-current-info" element={<EmployeeCurrentInfo />} />
+            <Route path="/payroll/masters/pay-period-master" element={<PayPeriodMaster />} />
+            <Route path="/payroll/masters/grade-master" element={<GradeMaster />} />
+            <Route path="/payroll/masters/loan-master" element={<LoanMaster />} />
+            <Route path="/payroll/masters/leave-master" element={<LeaveMaster />} />
+            <Route path="/payroll/masters/employee-type" element={<EmployeeCategoryMaster />} />
+            <Route path="/payroll/masters/shift-master" element={<ShiftMaster />} />
+            <Route path="/payroll/masters/grade-pay-scale" element={<GradePayScale />} />
+            <Route path="/payroll/masters/tax-formula-master" element={<TaxFormulaCalculation />} />
+            <Route path="/payroll/transactions/monthly-attendance" element={<MonthlyAttendanceSheet />} />
+            <Route path="/payroll/transactions/payroll-process" element={<PayrollProcess />} />
+            <Route path="/payroll/transactions/loan-advance" element={<LoanApplication />} />
+            <Route path="/payroll/transactions/leave-application" element={<LeaveApplication />} />
+            <Route path="/payroll/transactions/monthly-adjustments" element={<MonthlyDeductions />} />
+            <Route path="/purchasing/purchase-request" element={<PurchaseRequest />} />
+            <Route path="/purchasing/purchase-quotation" element={<PurchaseQuotation />} />
+            <Route path="/purchasing/purchase-order" element={<PurchaseOrder />} />
+            <Route path="/purchasing/goods-receipt-po" element={<GoodsReceiptPO />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </DashboardLayout>
