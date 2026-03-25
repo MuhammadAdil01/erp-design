@@ -10,7 +10,7 @@ import {
 } from '@/components/ClassicERPUI';
 import { ChevronRight } from 'lucide-react';
 
-const PurchaseOrderContent = () => {
+const GoodsReturnContent = () => {
   const [activeTab, setActiveTab] = useState('Contents');
   const [form, setForm] = useState({
     vendor: '',
@@ -20,7 +20,7 @@ const PurchaseOrderContent = () => {
     localCurrency: 'PKR',
     status: 'Open',
     postingDate: '19.03.26',
-    deliveryDate: '',
+    dueDate: '',
     docDate: '19.03.26',
     buyer: '-No Sales Employee-',
     owner: '',
@@ -28,21 +28,18 @@ const PurchaseOrderContent = () => {
     shipTo: 'Jinnah Avenue(MB-2), APE\nCanal Road\n\n63100 BAHAWALPUR\nPAKISTAN',
     payTo: '',
     shippingType: '',
-    splitPurchaseOrder: false,
-    confirmed: true,
     journalRemark: '',
     paymentTerms: '',
     paymentMethod: '',
     centralBankInd: '',
     cashDiscountDateOffset: '',
+    consolidationType: 'Payment Consolidation',
+    consolidatingBP: '',
     businessPartnerProject: '',
     createQRCodeFrom: '',
-    cancellationDate: '',
-    requiredDate: '',
     indicator: '',
     federalTaxID: '',
     orderNumber: '',
-    termsAndConditions: '',
   });
 
   const handleChange = (field) => (e) => {
@@ -50,7 +47,7 @@ const PurchaseOrderContent = () => {
     setForm(prev => ({ ...prev, [field]: value }));
   };
 
-  const tabs = ['Contents', 'Logistics', 'Accounting', 'Attachments', 'Terms & Conditions'];
+  const tabs = ['Contents', 'Logistics', 'Accounting', 'Attachments'];
 
   return (
     <FormContainer 
@@ -104,9 +101,8 @@ const PurchaseOrderContent = () => {
             <div className="flex items-center gap-1 mb-[2px]">
               <span className="text-[11px] text-slate-800 w-[120px] shrink-0 font-medium">No.</span>
               <div className="flex-1 flex gap-1 items-center">
-                <ClassicSel options={['Staff-PO']} className="w-20" />
-                <ClassicInput value="215" className="w-16 bg-slate-100" />
-                <span className="text-[11px] text-slate-800">- 0</span>
+                <ClassicSel options={['DHAB-GRT']} className="w-20" />
+                <ClassicInput value="1" className="w-16 bg-slate-100" />
               </div>
             </div>
             <FieldRow label="Status" labelWidth="120px">
@@ -115,8 +111,8 @@ const PurchaseOrderContent = () => {
             <FieldRow label="Posting Date" labelWidth="120px">
               <ClassicInput value={form.postingDate} onChange={handleChange('postingDate')} />
             </FieldRow>
-            <FieldRow label="Delivery Date" labelWidth="120px">
-              <ClassicInput value={form.deliveryDate} onChange={handleChange('deliveryDate')} />
+            <FieldRow label="Due Date" labelWidth="120px">
+              <ClassicInput value={form.dueDate} onChange={handleChange('dueDate')} />
             </FieldRow>
             <FieldRow label="Document Date" labelWidth="120px">
               <ClassicInput value={form.docDate} onChange={handleChange('docDate')} />
@@ -145,7 +141,7 @@ const PurchaseOrderContent = () => {
                  <ClassicSel options={['Item', 'Service']} className="w-32" />
                </div>
                <div className="border border-slate-400 bg-white overflow-auto max-h-[350px]">
-                 <table className="w-full text-[10px] border-collapse min-w-[1700px]">
+                 <table className="w-full text-[10px] border-collapse min-w-[1500px]">
                    <thead>
                      <tr className="bg-slate-100 border-b border-slate-400 sticky top-0 z-10">
                        <th className="border-r border-slate-400 w-8 px-1 py-1">#</th>
@@ -159,8 +155,6 @@ const PurchaseOrderContent = () => {
                        <th className="border-r border-slate-400 px-2 py-1 text-left min-w-[100px]">UoM Code</th>
                        <th className="border-r border-slate-400 px-2 py-1 text-left min-w-[150px]">Country/Region of Origin</th>
                        <th className="border-r border-slate-400 px-2 py-1 text-left min-w-[150px]">Blanket Agreement No.</th>
-                       <th className="border-r border-slate-400 px-2 py-1 text-left min-w-[150px]">Standard Item Identification</th>
-                       <th className="border-r border-slate-400 px-2 py-1 text-left min-w-[150px]">Commodity Classification</th>
                        <th className="border-r border-slate-400 px-2 py-1 text-right min-w-[80px]">Retention %</th>
                        <th className="border-r border-slate-400 px-2 py-1 text-left min-w-[100px]">IPC No.</th>
                        <th className="px-2 py-1 text-left min-w-[100px]">Rejected Quantity</th>
@@ -179,15 +173,13 @@ const PurchaseOrderContent = () => {
                         <td className="border-r border-slate-200 px-1"></td>
                         <td className="border-r border-slate-200 px-1"></td>
                         <td className="border-r border-slate-200 px-1"></td>
-                        <td className="border-r border-slate-200 px-1"></td>
-                        <td className="border-r border-slate-200 px-1"></td>
                         <td className="border-r border-slate-200 px-1 text-right">0.00</td>
                         <td className="border-r border-slate-200 px-1"></td>
                         <td className="px-1 text-slate-300">No Summary</td>
                       </tr>
                       {Array.from({ length: 14 }).map((_, i) => (
                         <tr key={i} className="h-[20px] border-b border-slate-200">
-                           {Array.from({ length: 16 }).map((__, j) => (
+                           {Array.from({ length: 14 }).map((__, j) => (
                              <td key={j} className="border-r border-slate-200 last:border-r-0" />
                            ))}
                         </tr>
@@ -228,18 +220,8 @@ const PurchaseOrderContent = () => {
                    </div>
                 </div>
                 <FieldRow label="Shipping Type" labelWidth="80px">
-                   <ClassicSel options={['---']} />
+                   <ClassicSel options={['---']} value={form.shippingType} onChange={handleChange('shippingType')} />
                 </FieldRow>
-              </div>
-              <div className="space-y-2 pt-4">
-                <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={form.splitPurchaseOrder} onChange={handleChange('splitPurchaseOrder')} />
-                  <span className="text-[11px] text-slate-800">Split Purchase Order</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <input type="checkbox" checked={form.confirmed} onChange={handleChange('confirmed')} />
-                  <span className="text-[11px] text-slate-800">Confirmed</span>
-                </div>
               </div>
             </div>
           )}
@@ -248,17 +230,17 @@ const PurchaseOrderContent = () => {
             <div className="flex gap-20">
                <div className="w-[400px] space-y-[1px]">
                   <FieldRow label="Journal Remark" labelWidth="140px">
-                    <ClassicInput />
+                    <ClassicInput value={form.journalRemark} onChange={handleChange('journalRemark')} />
                   </FieldRow>
                   <div className="pt-4"></div>
                   <FieldRow label="Payment Terms" labelWidth="140px">
-                    <ClassicSel options={['---']} />
+                    <ClassicSel options={['---']} value={form.paymentTerms} onChange={handleChange('paymentTerms')} />
                   </FieldRow>
                   <FieldRow label="Payment Method" labelWidth="140px">
-                    <ClassicSel options={['---']} />
+                    <ClassicSel options={['---']} value={form.paymentMethod} onChange={handleChange('paymentMethod')} />
                   </FieldRow>
                   <FieldRow label="Central Bank Ind." labelWidth="140px">
-                    <ClassicSel options={['---']} />
+                    <ClassicSel options={['---']} value={form.centralBankInd} onChange={handleChange('centralBankInd')} />
                   </FieldRow>
                   <div className="flex items-center gap-2 py-2">
                     <span className="text-[10px] text-slate-600 font-bold uppercase">Manually Recalculate Due Date:</span>
@@ -270,32 +252,33 @@ const PurchaseOrderContent = () => {
                     <span className="text-[11px]">Days</span>
                   </div>
                   <FieldRow label="Cash Discount Date Offset" labelWidth="180px">
-                    <ClassicInput className="w-16" />
+                    <ClassicInput className="w-16" value={form.cashDiscountDateOffset} onChange={handleChange('cashDiscountDateOffset')} />
+                  </FieldRow>
+                  <div className="pt-4"></div>
+                  <FieldRow label="Consolidation Type" labelWidth="140px">
+                    <ClassicSel options={['Payment Consolidation']} value={form.consolidationType} onChange={handleChange('consolidationType')} />
+                  </FieldRow>
+                  <FieldRow label="Consolidating BP" labelWidth="140px">
+                    <ClassicInput value={form.consolidatingBP} onChange={handleChange('consolidatingBP')} />
                   </FieldRow>
                </div>
                <div className="flex-1 max-w-[400px] space-y-[1px]">
                   <FieldRow label="Business Partner Project" labelWidth="140px">
-                    <ClassicInput />
+                    <ClassicInput value={form.businessPartnerProject} onChange={handleChange('businessPartnerProject')} />
                   </FieldRow>
                   <FieldRow label="Create QR Code From" labelWidth="140px">
-                    <ClassicInput />
-                  </FieldRow>
-                  <div className="pt-4"></div>
-                  <FieldRow label="Cancellation Date" labelWidth="140px">
-                    <ClassicInput />
-                  </FieldRow>
-                  <FieldRow label="Required Date" labelWidth="140px">
-                    <ClassicInput />
+                    <ClassicInput value={form.createQRCodeFrom} onChange={handleChange('createQRCodeFrom')} />
                   </FieldRow>
                   <div className="pt-4"></div>
                   <FieldRow label="Indicator" labelWidth="140px">
-                    <ClassicSel options={['---']} />
+                    <ClassicSel options={['---']} value={form.indicator} onChange={handleChange('indicator')} />
                   </FieldRow>
                   <FieldRow label="Federal Tax ID" labelWidth="140px">
-                    <ClassicInput />
+                    <ClassicInput value={form.federalTaxID} onChange={handleChange('federalTaxID')} />
                   </FieldRow>
+                  <div className="pt-4"></div>
                   <FieldRow label="Order Number" labelWidth="140px">
-                    <ClassicInput />
+                    <ClassicInput value={form.orderNumber} onChange={handleChange('orderNumber')} />
                   </FieldRow>
                   <div className="flex items-center justify-end gap-2 pt-10">
                     <span className="text-[11px] text-slate-700">Referenced Document</span>
@@ -344,20 +327,10 @@ const PurchaseOrderContent = () => {
               </div>
             </div>
           )}
-
-          {activeTab === 'Terms & Conditions' && (
-            <div className="w-full max-w-[800px]">
-              <textarea 
-                className="w-full h-[300px] border border-slate-400 outline-none p-2 text-[11px] bg-white resize-none"
-                value={form.termsAndConditions}
-                onChange={handleChange('termsAndConditions')}
-              />
-            </div>
-          )}
         </div>
 
         {/* Footer Section */}
-        <div className="flex justify-between items-end gap-10">
+        <div className="flex justify-between items-end gap-10 mt-4">
           <div className="w-[400px] space-y-2">
             <FieldRow label="Buyer" labelWidth="80px">
               <div className="flex-1 flex gap-1 items-center">
@@ -403,7 +376,7 @@ const PurchaseOrderContent = () => {
               <ClassicInput disabled className="bg-slate-100" />
             </FieldRow>
             <div className="flex items-center justify-between border-t border-slate-300 pt-1 mt-1">
-              <span className="text-[11px] font-bold text-slate-800">Total Payment Due</span>
+              <span className="text-[11px] font-bold text-slate-800">Total Credit</span>
               <span className="text-[11px] font-bold text-slate-800">PKR 0.00</span>
             </div>
           </div>
@@ -413,18 +386,18 @@ const PurchaseOrderContent = () => {
   );
 };
 
-export default function PurchaseOrder() {
+export default function GoodsReturn() {
   const { openWindow } = useWindowContext();
   const isOpened = React.useRef(false);
 
   useEffect(() => {
     if (isOpened.current) return;
     openWindow({
-      id: 'purchase-order',
-      title: 'Purchase Order',
-      component: <PurchaseOrderContent />,
+      id: 'goods-return',
+      title: 'Goods Return',
+      component: <GoodsReturnContent />,
       initialSize: { width: 1200, height: 850 },
-      initialPosition: { x: 50, y: 20 },
+      initialPosition: { x: 80, y: 50 },
     });
     isOpened.current = true;
   }, [openWindow]);
@@ -432,4 +405,4 @@ export default function PurchaseOrder() {
   return null;
 }
 
-export { PurchaseOrderContent };
+export { GoodsReturnContent };

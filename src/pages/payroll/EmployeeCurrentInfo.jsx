@@ -31,7 +31,6 @@ const ImageBox = ({ onRemove, onCapture }) => (
   </div>
 );
 
-// ─── Initial form state ────────────────────────────────────────────────────────
 
 const initialForm = {
   employeeCode: '',
@@ -66,8 +65,6 @@ const initialForm = {
   locationProjectSite: '---',
   esiNo: '',
 };
-
-// ─── Main content component ───────────────────────────────────────────────────
 
 const EmployeeCurrentInfoContent = () => {
   const [activeTab, setActiveTab] = useState('Employee Details');
@@ -289,7 +286,6 @@ const EmployeeCurrentInfoContent = () => {
   );
 };
 
-// ─── Root component ───────────────────────────────────────────────────────────
 
 export default function EmployeeCurrentInfo() {
   const { openWindow } = useWindowContext();

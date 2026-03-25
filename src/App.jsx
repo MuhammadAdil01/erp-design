@@ -43,6 +43,8 @@ import PurchaseRequest from './pages/purchasing/PurchaseRequest';
 import PurchaseQuotation from './pages/purchasing/PurchaseQuotation';
 import PurchaseOrder from './pages/purchasing/PurchaseOrder';
 import GoodsReceiptPO from './pages/purchasing/GoodsReceiptPO';
+import GoodsReturnRequest from './pages/purchasing/GoodsReturnRequest';
+import GoodsReturn from './pages/purchasing/GoodsReturn';
 
 import {
   Users,
@@ -156,6 +158,8 @@ function App() {
             <Route path="/purchasing/purchase-quotation" element={<PurchaseQuotation />} />
             <Route path="/purchasing/purchase-order" element={<PurchaseOrder />} />
             <Route path="/purchasing/goods-receipt-po" element={<GoodsReceiptPO />} />
+            <Route path="/purchasing/goods-return-request" element={<GoodsReturnRequest />} />
+            <Route path="/purchasing/goods-return" element={<GoodsReturn />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </DashboardLayout>
