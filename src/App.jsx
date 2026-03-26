@@ -45,6 +45,18 @@ import PurchaseOrder from './pages/purchasing/PurchaseOrder';
 import GoodsReceiptPO from './pages/purchasing/GoodsReceiptPO';
 import GoodsReturnRequest from './pages/purchasing/GoodsReturnRequest';
 import GoodsReturn from './pages/purchasing/GoodsReturn';
+import APDownPaymentRequest from './pages/purchasing/APDownPaymentRequest';
+import APDownPaymentInvoice from './pages/purchasing/APDownPaymentInvoice';
+import APInvoice from './pages/purchasing/APInvoice';
+import APCreditMemo from './pages/purchasing/APCreditMemo';
+import APReserveInvoice from './pages/purchasing/APReserveInvoice';
+import RecurringTransactions from './pages/purchasing/RecurringTransactions';
+import RecurringTransactionTemplates from './pages/purchasing/RecurringTransactionTemplates';
+import LandedCosts from './pages/purchasing/LandedCosts';
+import OpenItemsList from './pages/purchasing/OpenItemsList';
+import PurchaseAnalysis from './pages/purchasing/PurchaseAnalysis';
+import PurchaseRequestReport from './pages/purchasing/PurchaseRequestReport';
+import PurchaseQuotationComparisonReport from './pages/purchasing/PurchaseQuotationComparisonReport';
 
 import {
   Users,
@@ -160,6 +172,18 @@ function App() {
             <Route path="/purchasing/goods-receipt-po" element={<GoodsReceiptPO />} />
             <Route path="/purchasing/goods-return-request" element={<GoodsReturnRequest />} />
             <Route path="/purchasing/goods-return" element={<GoodsReturn />} />
+            <Route path="/purchasing/ap-down-payment-request" element={<APDownPaymentRequest />} />
+            <Route path="/purchasing/ap-down-payment-invoice" element={<APDownPaymentInvoice />} />
+            <Route path="/purchasing/ap-invoice" element={<APInvoice />} />
+            <Route path="/purchasing/ap-credit-memo" element={<APCreditMemo />} />
+            <Route path="/purchasing/ap-reserve-invoice" element={<APReserveInvoice />} />
+            <Route path="/purchasing/recurring-transactions" element={<RecurringTransactions />} />
+            <Route path="/purchasing/recurring-transaction-templates" element={<RecurringTransactionTemplates />} />
+            <Route path="/purchasing/landed-costs" element={<LandedCosts />} />
+            <Route path="/purchasing/open-items-list" element={<OpenItemsList />} />
+            <Route path="/purchasing/purchase-analysis" element={<PurchaseAnalysis />} />
+            <Route path="/purchasing/purchase-request-report" element={<PurchaseRequestReport />} />
+            <Route path="/purchasing/purchase-quotation-comparison-report" element={<PurchaseQuotationComparisonReport />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </DashboardLayout>

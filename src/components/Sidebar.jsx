@@ -460,17 +460,24 @@ const CockpitView = () => {
     { title: "Goods Receipt PO", path: "/purchasing/goods-receipt-po" },
     { title: "Goods Return Request", path: "/purchasing/goods-return-request" },
     { title: "Goods Return", path: "/purchasing/goods-return" },
-    { title: "A/P Down Payment Request" },
-    { title: "A/P Down Payment Invoice" },
-    { title: "A/P Invoice" },
-    { title: "A/P Credit Memo" },
-    { title: "A/P Reserve Invoice" },
-    { title: "Recurring Transactions" },
-    { title: "Recurring Transaction Templates" },
-    { title: "Landed Costs" },
+    { title: "A/P Down Payment Request", path: "/purchasing/ap-down-payment-request" },
+    { title: "A/P Down Payment Invoice", path: "/purchasing/ap-down-payment-invoice" },
+    { title: "A/P Invoice", path: "/purchasing/ap-invoice" },
+    { title: "A/P Credit Memo", path: "/purchasing/ap-credit-memo" },
+    { title: "A/P Reserve Invoice", path: "/purchasing/ap-reserve-invoice" },
+    { title: "Recurring Transactions", path: "/purchasing/recurring-transactions" },
+    { title: "Recurring Transaction Templates", path: "/purchasing/recurring-transaction-templates" },
+    { title: "Landed Costs", path: "/purchasing/landed-costs" },
     { title: "Document Printing" },
-    { title: "Purchasing Reports", isFolder: true },
+    { title: "Purchasing Reports", isNested: true, children: [
+      { title: "Open Items List", path: "/purchasing/open-items-list" },
+      { title: "Purchase Analysis", path: "/purchasing/purchase-analysis" },
+      { title: "Purchase Request Report", path: "/purchasing/purchase-request-report" },
+      { title: "Purchase Quotation Comparison Report", path: "/purchasing/purchase-quotation-comparison-report" },
+    ]},
   ];
+
+  const [isPurchReportsOpen, setIsPurchReportsOpen] = useState(false);
 
   const galleryItems = [
     { title: "Common Functions", icon: <LayoutDashboard size={14} className="text-slate-500" /> },
@@ -501,20 +508,46 @@ const CockpitView = () => {
 
              {item.hasSubItems && item.isOpen && (
                <div className="bg-[#e9e9e9]">
-                 {purchasingSubItems.map((sItem, sIdx) => (
-                   <Link 
-                     key={sIdx} 
-                     to={sItem.path || "#"}
-                     className="flex items-center gap-2 px-8 py-1.5 text-[11px] text-slate-800 border-b border-white hover:bg-white transition-colors cursor-pointer group no-underline"
-                   >
-                      <div className="w-4 h-3.5 border border-slate-400 bg-white/50 flex flex-col gap-[1px] p-[1px] shrink-0">
-                        <div className="h-[2px] w-full bg-blue-300/60" />
-                        <div className="h-[2px] w-[70%] bg-blue-300/60" />
-                      </div>
-                      <span className="flex-1 group-hover:underline">{sItem.title}</span>
-                      {sItem.isFolder && <Folder size={12} className="text-blue-500 fill-current opacity-40" />}
-                   </Link>
-                 ))}
+                  {purchasingSubItems.map((sItem, sIdx) => (
+                    <React.Fragment key={sIdx}>
+                      {sItem.isNested ? (
+                        <>
+                          <div 
+                            onClick={() => setIsPurchReportsOpen(!isPurchReportsOpen)}
+                            className="flex items-center gap-2 px-8 py-1.5 text-[11px] text-slate-800 border-b border-white hover:bg-white transition-colors cursor-pointer group"
+                          >
+                             <Folder size={14} className="text-yellow-600 fill-yellow-300 shrink-0" />
+                             <span className="flex-1 group-hover:underline font-semibold">{sItem.title}</span>
+                             <ChevronRight size={12} className={`text-slate-500 transition-transform ${isPurchReportsOpen ? 'rotate-90' : ''}`} />
+                          </div>
+                          {isPurchReportsOpen && sItem.children && sItem.children.map((child, cIdx) => (
+                            <Link 
+                              key={cIdx}
+                              to={child.path || "#"}
+                              className="flex items-center gap-2 px-12 py-1.5 text-[11px] text-slate-800 border-b border-white hover:bg-white transition-colors cursor-pointer group no-underline"
+                            >
+                               <div className="w-4 h-3.5 border border-slate-400 bg-white/50 flex flex-col gap-[1px] p-[1px] shrink-0">
+                                 <div className="h-[2px] w-full bg-blue-300/60" />
+                                 <div className="h-[2px] w-[70%] bg-blue-300/60" />
+                               </div>
+                               <span className="flex-1 group-hover:underline">{child.title}</span>
+                            </Link>
+                          ))}
+                        </>
+                      ) : (
+                        <Link 
+                          to={sItem.path || "#"}
+                          className="flex items-center gap-2 px-8 py-1.5 text-[11px] text-slate-800 border-b border-white hover:bg-white transition-colors cursor-pointer group no-underline"
+                        >
+                           <div className="w-4 h-3.5 border border-slate-400 bg-white/50 flex flex-col gap-[1px] p-[1px] shrink-0">
+                             <div className="h-[2px] w-full bg-blue-300/60" />
+                             <div className="h-[2px] w-[70%] bg-blue-300/60" />
+                           </div>
+                           <span className="flex-1 group-hover:underline">{sItem.title}</span>
+                        </Link>
+                      )}
+                    </React.Fragment>
+                  ))}
                </div>
              )}
 
